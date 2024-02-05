@@ -1,0 +1,37 @@
+<%= form_with(model: member_activity) do |form| %>
+  <% if member_activity.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(member_activity.errors.count, "error") %> prohibited this member_activity from being saved:</h2>
+
+      <ul>
+        <% member_activity.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.number_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :activity_id, style: "display: block" %>
+    <%= form.number_field :activity_id %>
+  </div>
+
+  <div>
+    <%= form.label :date, style: "display: block" %>
+    <%= form.datetime_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :time_spent, style: "display: block" %>
+    <%= form.time_field :time_spent %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

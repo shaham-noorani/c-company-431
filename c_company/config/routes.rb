@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :member_activities
+  resources :member_events
+  resources :activity_types
+  resources :activities
+  resources :events
+  resources :users
+  resources :platoons
 
   # Defines the root path route ("/")
   # root "articles#index"
