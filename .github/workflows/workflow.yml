@@ -40,11 +40,17 @@ jobs:
         with:
           cmd: install
       - name: Run tests
-        run: bundler exec rspec .
+        run: |
+          cd c_company
+          bundler exec rspec .
       - name: Run brakeman
-        run: brakeman -o brakeman.txt
+        run: |
+          cd c_company
+          brakeman -o brakeman.txt
       - name: Run rubocop
-        run: bundler exec rubocop --force-exclusion vendor/*/** --out rubocop.txt
+        run: |
+          cd c_company
+          bundler exec rubocop --force-exclusion vendor/*/** --out rubocop.txt
       - name: Upload coverage results
         uses: actions/upload-artifact@master
         if: always()
