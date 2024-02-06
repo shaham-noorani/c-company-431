@@ -32,6 +32,7 @@ jobs:
         run: cd c_company
       - name: Install dependencies
         run: |
+          ls
           gem install bundler
           bundler install
       - name: Create database
