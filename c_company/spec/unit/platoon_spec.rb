@@ -2,8 +2,16 @@
 require 'rails_helper'
 
 RSpec.describe Platoon, type: :model do
-  let(:leader) { User.create(first_name: 'Leader', last_name: 'User', email: 'leader@example.com', role: 'leader') }
-
+  let(:leader){
+    User.create(
+      first_name: 'John',
+      last_name: 'Doe',
+      email: 'john@example.com',
+      role: 'member',
+      class_year: 'fish', # Adjust the value based on your needs
+      military_affiliation: 'Air Force', # Adjust the value based on your needs
+      military_branch: 'USAF' # Adjust the value based on your needs
+    )}
   subject do
     described_class.new(
       name: 'Alpha Platoon',

@@ -2,7 +2,16 @@
 require 'rails_helper'
 
 RSpec.describe MemberActivity, type: :model do
-  let(:user) { User.create(first_name: 'John', last_name: 'Doe', email: 'john@example.com', role: 'member') }
+  let(:user){
+    User.create(
+      first_name: 'John',
+      last_name: 'Doe',
+      email: 'john@example.com',
+      role: 'member',
+      class_year: 'fish', # Adjust the value based on your needs
+      military_affiliation: 'Air Force', # Adjust the value based on your needs
+      military_branch: 'USAF' # Adjust the value based on your needs
+    )}
   let(:activity_type) { ActivityType.create(name: 'Running', description: 'Outdoor physical activity') }
   let(:activity) { Activity.create(name: 'Morning Run', activity_type: activity_type, description: 'A refreshing morning jog') }
 

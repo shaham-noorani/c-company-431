@@ -10,7 +10,10 @@ RSpec.describe User, type: :model do
       last_name: 'Doe',
       email: 'john@example.com',
       role: 'member',
-      platoon_id: platoon.id
+      platoon_id: platoon.id,
+      class_year: '2024', # Adjust the value based on your needs
+      military_affiliation: 'Air Force', # Adjust the value based on your needs
+      military_branch: 'USAF' # Adjust the value based on your needs
     )
   end
 
