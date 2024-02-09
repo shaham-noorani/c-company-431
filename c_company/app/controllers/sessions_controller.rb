@@ -13,5 +13,6 @@ class SessionsController < ApplicationController
       )
     end
     redirect_to(users_path)
+    session[":useremail"] = user_info.info.email
   end
 end

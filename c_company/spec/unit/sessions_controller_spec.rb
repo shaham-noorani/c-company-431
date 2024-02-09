@@ -24,12 +24,14 @@ RSpec.describe SessionsController, type: :controller do
 
       it "creates a new user if one doesn't exist" do
         expect(User.last.email).to eq('user@example.com')
+        expect(session[":useremail"]).to eq('user@example.com')
       end
 
       it "finds the existing user if one exists" do
         expect {
           post :create, params: { provider: 'google_oauth2' }
         }.not_to change(User, :count)
+        expect(session[":useremail"]).to eq('user@example.com')
       end
     end
   end
