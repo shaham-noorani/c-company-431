@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :users
   resources :platoons
 
+  get '/auth/:provider/callback', to: 'sessions#create'
   # Defines the root path route ("/")
-  # root "articles#index"
+  root "sessions#new"
 end

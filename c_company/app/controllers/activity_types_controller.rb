@@ -1,5 +1,5 @@
 class ActivityTypesController < ApplicationController
-  before_action :set_activity_type, only: %i[ show edit update destroy ]
+  before_action :set_activity_type, only: %i[show edit update destroy]
 
   # GET /activity_types or /activity_types.json
   def index
@@ -7,8 +7,7 @@ class ActivityTypesController < ApplicationController
   end
 
   # GET /activity_types/1 or /activity_types/1.json
-  def show
-  end
+  def show; end
 
   # GET /activity_types/new
   def new
@@ -16,8 +15,7 @@ class ActivityTypesController < ApplicationController
   end
 
   # GET /activity_types/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /activity_types or /activity_types.json
   def create
@@ -25,11 +23,11 @@ class ActivityTypesController < ApplicationController
 
     respond_to do |format|
       if @activity_type.save
-        format.html { redirect_to activity_type_url(@activity_type), notice: "Activity type was successfully created." }
-        format.json { render :show, status: :created, location: @activity_type }
+        format.html { redirect_to(activity_type_url(@activity_type), notice: 'Activity type was successfully created.') }
+        format.json { render(:show, status: :created, location: @activity_type) }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @activity_type.errors, status: :unprocessable_entity }
+        format.html { render(:new, status: :unprocessable_entity) }
+        format.json { render(json: @activity_type.errors, status: :unprocessable_entity) }
       end
     end
   end
@@ -38,11 +36,11 @@ class ActivityTypesController < ApplicationController
   def update
     respond_to do |format|
       if @activity_type.update(activity_type_params)
-        format.html { redirect_to activity_type_url(@activity_type), notice: "Activity type was successfully updated." }
-        format.json { render :show, status: :ok, location: @activity_type }
+        format.html { redirect_to(activity_type_url(@activity_type), notice: 'Activity type was successfully updated.') }
+        format.json { render(:show, status: :ok, location: @activity_type) }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @activity_type.errors, status: :unprocessable_entity }
+        format.html { render(:edit, status: :unprocessable_entity) }
+        format.json { render(json: @activity_type.errors, status: :unprocessable_entity) }
       end
     end
   end
@@ -52,19 +50,20 @@ class ActivityTypesController < ApplicationController
     @activity_type.destroy
 
     respond_to do |format|
-      format.html { redirect_to activity_types_url, notice: "Activity type was successfully destroyed." }
-      format.json { head :no_content }
+      format.html { redirect_to(activity_types_url, notice: 'Activity type was successfully destroyed.') }
+      format.json { head(:no_content) }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_activity_type
-      @activity_type = ActivityType.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def activity_type_params
-      params.require(:activity_type).permit(:name, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_activity_type
+    @activity_type = ActivityType.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def activity_type_params
+    params.require(:activity_type).permit(:name, :description)
+  end
 end
