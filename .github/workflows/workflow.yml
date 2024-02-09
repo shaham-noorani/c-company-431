@@ -15,7 +15,7 @@ jobs:
       postgres:
         image: postgres:12
         ports:
-        - 5432:5432
+          - 5432:5432
         env:
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
@@ -28,12 +28,10 @@ jobs:
         run: sudo apt-get install libpq-dev
       - name: Install dependencies
         run: |
-          cd c_company
           gem install bundler
           bundler install
       - name: Create database
         run: |
-          cd c_company
           bundler exec rails db:create RAILS_ENV=test
           bundler exec rails db:migrate RAILS_ENV=test
       - uses: borales/actions-yarn@v3.0.0
@@ -41,15 +39,12 @@ jobs:
           cmd: install
       - name: Run tests
         run: |
-          cd c_company
           bundler exec rspec .
       # - name: Run brakeman
       #   run: |
-      #     cd c_company
       #     brakeman -o brakeman.txt
       - name: Run rubocop
         run: |
-          cd c_company
           bundler exec rubocop --force-exclusion vendor/*/** --out rubocop.txt
       - name: Upload coverage results
         uses: actions/upload-artifact@master
@@ -69,4 +64,3 @@ jobs:
       #   with:
       #     name: brakeman-report.txt
       #     path: brakeman.txt
-
