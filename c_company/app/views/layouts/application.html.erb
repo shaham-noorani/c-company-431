@@ -11,7 +11,7 @@
   <style>
     /* Add your custom styles for the navbar here */
     .navbar {
-      background-color: #333;
+      background-color: #800000;
       padding: 10px 0;
     }
 
@@ -50,10 +50,13 @@
         <%= link_to 'Home', '/', class: 'nav-link' %>
       </li>
       <li class="nav-item">
+        <%= link_to 'Platoons', platoons_path, class: 'nav-link' %>
+      </li>
+      <li class="nav-item">
         <%= link_to 'Activities', activities_path, class: 'nav-link' %>
       </li>
       <li class="nav-item">
-        <%= link_to 'New Activity', new_activity_path, class: 'nav-link' %>
+        <%= link_to 'Events', events_path, class: 'nav-link' %>
       </li>
       <!-- Add more navigation links as needed -->
     </ul>
