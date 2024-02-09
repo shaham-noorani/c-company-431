@@ -10,6 +10,6 @@ class MemberActivity < ApplicationRecord
   validates :end_time, presence: true
 
   # Remove any reference to time_spent
-  
+
   # Add any additional model logic or methods based on your requirements
 end
