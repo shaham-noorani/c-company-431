@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   # GET /users or /users.json
   def index
     @users = User.all
+    @my_user = User.find_by(email: session[":useremail"])
   end
 
   # GET /users/1 or /users/1.json
