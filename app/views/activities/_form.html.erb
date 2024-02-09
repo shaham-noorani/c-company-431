@@ -18,7 +18,7 @@
 
   <div>
     <%= form.label :activity_type_id, style: "display: block" %>
-    <%= form.number_field :activity_type_id %>
+    <%= form.select :activity_type_id, ActivityType.all.map { |type| [type.name, type.id] } %>
   </div>
 
   <div>
