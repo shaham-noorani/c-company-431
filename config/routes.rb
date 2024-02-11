@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :member_activities
+  resources :member_activities do
+    member do
+      patch :mark_complete
+    end
+  end
   resources :member_events
   resources :activity_types
   resources :activities
@@ -11,3 +15,4 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "sessions#new"
 end
+

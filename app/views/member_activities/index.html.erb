@@ -1,14 +1,24 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Member activities</h1>
+<h1>Member Activities</h1>
 
 <div id="member_activities">
   <% @member_activities.each do |member_activity| %>
-    <%= render member_activity %>
-    <p>
-      <%= link_to "Show this member activity", member_activity %>
-    </p>
+    <div class="member_activity">
+      <p><strong>Activity:</strong> <%= member_activity.activity.name %></p>
+      <p><strong>Description:</strong> <%= member_activity.activity.description %></p>
+      <p><strong>Status:</strong> <%= member_activity.completed ? 'Completed' : 'Pending' %></p>
+
+      <% unless member_activity.completed %>
+        <%= link_to 'Mark as Completed', mark_complete_member_activity_path(member_activity), method: :patch, data: { confirm: 'Are you sure you want to mark this activity as completed?' }, class: 'btn btn-success' %>
+      <% end %>
+
+      <p>
+        <%= link_to "Show this member activity", member_activity_path(member_activity) %>
+      </p>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New member activity", new_member_activity_path %>
+<%= link_to "New Member Activity", new_member_activity_path, class: 'btn btn-primary' %>
+

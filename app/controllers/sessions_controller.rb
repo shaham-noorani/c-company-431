@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
         last_name: user_info.info.last_name,
         email: user_info.info.email,
         role: 'pleb'
+        
       )
     end
     redirect_to(users_path)
