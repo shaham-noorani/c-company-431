@@ -16,10 +16,7 @@
     <%= form.text_field :name %>
   </div>
 
-  <div>
-    <%= form.label :activity_type_id, style: "display: block" %>
-    <%= form.select :activity_type_id, ActivityType.all.map { |type| [type.name, type.id] } %>
-  </div>
+
 
   <div>
     <%= form.label :description, style: "display: block" %>

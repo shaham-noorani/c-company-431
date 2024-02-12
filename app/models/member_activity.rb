@@ -7,7 +7,7 @@ class MemberActivity < ApplicationRecord
   validates :activity, presence: true
   validates :date, presence: true
   validates :start_time, presence: true
-  validates :end_time, presence: true
+  validates :end_time, presence: false
 
   # Remove any reference to time_spent
 
