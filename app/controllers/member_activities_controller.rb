@@ -56,8 +56,16 @@ class MemberActivitiesController < ApplicationController
   end
 
   # Custom action to mark an activity as completed
+  # def mark_complete
+  #   if @member_activity.update(completed: true)
+  #     redirect_to member_activities_path, notice: 'Activity was successfully marked as completed.'
+  #   else
+  #     redirect_to member_activities_path, alert: 'Unable to mark activity as completed.'
+  #   end
+  # end
+
   def mark_complete
-    if @member_activity.update(completed: true)
+    if @member_activity.update(completed: true, end_time: Time.current)
       redirect_to member_activities_path, notice: 'Activity was successfully marked as completed.'
     else
       redirect_to member_activities_path, alert: 'Unable to mark activity as completed.'
