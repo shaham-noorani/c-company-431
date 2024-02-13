@@ -64,6 +64,6 @@ class MemberActivitiesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def member_activity_params
-    params.require(:member_activity).permit(:user_id, :activity_id, :date, :time_spent)
+    params.require(:member_activity).permit(:user_id, :activity_id, :date, :start_time, :end_time)
   end
 end

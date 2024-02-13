@@ -40,6 +40,9 @@
     <%= form.label :activity_id, style: "display: block" %>
     <%= form.select :activity_id, Activity.all.map { |activity| [activity.name, activity.id] } %>
   </div>
+
+  <br>
+  <br>
   
   <div>
     <%= form.submit %>

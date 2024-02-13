@@ -16,17 +16,61 @@
     <%= form.text_field :name %>
   </div>
 
+<br>
+
   <div>
     <%= form.label :activity_type_id, style: "display: block" %>
     <%= form.select :activity_type_id, ActivityType.all.map { |type| [type.name, type.id] } %>
   </div>
 
+  <br>
+
+  
   <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
+    <p> Assign To </p>
+    <button type="button" id="assign_to_platoon">Platoon</button>
+    <button type="button" id="assign_to_member">Member</button>
   </div>
+
+  <br>
+  <br>
+
+  <div id="platoon_dropdown" style="display: none;">
+    <%= form.label :platoon_id, 'Select Platoon:', style: "display: block" %>
+    <%= form.select :platoon_id, options_for_select(Platoon.all.map { |platoon| [platoon.name, platoon.id] }) %>
+  </div>
+
+  <div id="member_dropdown" style="display: none;">
+    <%= form.label :user_id, 'Select Member:', style: "display: block" %>
+    <%= form.select :user_id, options_for_select(User.all.map { |user| [user.first_name, user.id] }) %>
+  </div>
+
+  <br>
 
   <div>
     <%= form.submit %>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var platoonDropdown = document.getElementById("platoon_dropdown");
+      var memberDropdown = document.getElementById("member_dropdown");
+
+      document.getElementById("assign_to_platoon").addEventListener("click", function() {
+        platoonDropdown.style.display = "block";
+        memberDropdown.style.display = "none";
+      });
+
+      document.getElementById("assign_to_member").addEventListener("click", function() {
+        platoonDropdown.style.display = "none";
+        memberDropdown.style.display = "block";
+      });
+    });
+  </script>
+
+
+
+
 <% end %>
+
+
