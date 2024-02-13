@@ -5,7 +5,7 @@ RSpec.describe(Activity, type: :model) do
   subject do
     described_class.new(
       name: 'Morning Run',
-      activity_type_id: activity_type.id,
+      activity_type_name: activity_type.name,
       description: 'A refreshing morning jog'
     )
   end

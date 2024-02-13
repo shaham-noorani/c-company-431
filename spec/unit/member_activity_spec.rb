@@ -24,7 +24,7 @@ RSpec.describe(MemberActivity, type: :model) do
     )
   end
   let(:activity_type) { ActivityType.create(name: 'Running', description: 'Outdoor physical activity') }
-  let(:activity) { Activity.create(name: 'Morning Run', activity_type: activity_type, description: 'A refreshing morning jog') }
+  let(:activity) { Activity.create(name: 'Morning Run', activity_type_name: activity_type.name, description: 'A refreshing morning jog') }
 
   it 'is valid with valid attributes' do
     expect(subject).to(be_valid)
