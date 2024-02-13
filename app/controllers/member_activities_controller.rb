@@ -81,6 +81,7 @@ class MemberActivitiesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def member_activity_params
+
     params.require(:member_activity).permit(:user_id, :activity_id, :date, :start_time, :end_time, :completed) # Ensure you include :completed if it's part of your form
   end
 end
