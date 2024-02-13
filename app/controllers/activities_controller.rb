@@ -21,6 +21,34 @@ class ActivitiesController < ApplicationController
   def create
     @activity = Activity.new(activity_params)
 
+    if params[:assign_to] == 'platoon'
+      platoon = Platoon.find(params[:platoon_id])
+      users_in_platoon = platoon.users
+    
+      users_in_platoon.each do |user|
+        member_activites = MemberActivity.new(
+          user_id: user.id
+          activity_id: @activity.id
+          date: nil
+          start_time: nil
+          end_time: nil
+        )
+        member_activities.save
+      end
+
+    elsif params[:assign_to] == 'member'
+      user = User.find(params[:user_id])
+      member_activity = MemberActivity.new(
+        user_id: user.id
+        activity_id: @activity.id
+        date: nil
+        start_time: nil
+        end_time: nil
+      )
+      member_activity.save
+
+    end
+
     respond_to do |format|
       if @activity.save
         format.html { redirect_to(activity_url(@activity), notice: 'Activity was successfully created.') }
