@@ -6,7 +6,11 @@
 
   <p>
     <strong>Leader:</strong>
-    <%= platoon.leader_id %>
+  <% user = User.find_by(id: platoon.leader_id) %>
+  <% if user %>
+    <%= user.first_name + " " + user.last_name %>
+  <% end %>
+    
   </p>
 
 </div>

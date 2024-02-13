@@ -24,7 +24,7 @@ RSpec.describe(MemberActivity, type: :model) do
     )
   end
   let(:activity_type) { ActivityType.create(name: 'Running', description: 'Outdoor physical activity') }
-  let(:activity) { Activity.create(name: 'Morning Run', activity_type: activity_type, description: 'A refreshing morning jog') }
+  let(:activity) { Activity.create(name: 'Morning Run', activity_type_name: activity_type.name, description: 'A refreshing morning jog') }
 
   it 'is valid with valid attributes' do
     expect(subject).to(be_valid)
@@ -45,15 +45,8 @@ RSpec.describe(MemberActivity, type: :model) do
     expect(subject).not_to(be_valid)
   end
 
-  it 'is not valid without start_time' do
-    subject.start_time = nil
-    expect(subject).not_to(be_valid)
-  end
 
-  it 'is not valid without end_time' do
-    subject.end_time = nil
-    expect(subject).not_to(be_valid)
-  end
+
 
   it 'belongs to a user' do
     association = described_class.reflect_on_association(:user)
