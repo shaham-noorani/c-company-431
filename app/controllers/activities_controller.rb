@@ -27,10 +27,10 @@ class ActivitiesController < ApplicationController
     
       users_in_platoon.each do |user|
         member_activites = MemberActivity.new(
-          user_id: user.id
-          activity_id: @activity.id
-          date: nil
-          start_time: nil
+          user_id: user.id,
+          activity_id: @activity.id,
+          date: nil,
+          start_time: nil,
           end_time: nil
         )
         member_activities.save
@@ -39,10 +39,10 @@ class ActivitiesController < ApplicationController
     elsif params[:assign_to] == 'member'
       user = User.find(params[:user_id])
       member_activity = MemberActivity.new(
-        user_id: user.id
-        activity_id: @activity.id
-        date: nil
-        start_time: nil
+        user_id: user.id,
+        activity_id: @activity.id,
+        date: nil,
+        start_time: nil,
         end_time: nil
       )
       member_activity.save
