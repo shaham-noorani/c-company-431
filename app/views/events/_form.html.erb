@@ -38,9 +38,9 @@
 
   <div>
     <%= form.label :activity_id, style: "display: block" %>
-    <%= form.number_field :activity_id %>
+    <%= form.select :activity_id, Activity.all.map { |activity| [activity.name, activity.id] } %>
   </div>
-
+  
   <div>
     <%= form.submit %>
   </div>
