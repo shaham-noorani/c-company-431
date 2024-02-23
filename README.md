@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Application Description
+C-Company Activity tracker is a tracker to help assist leaderhsip with assigning activities to members and being able to view the completion of them. In this application, all key leadership will be able to create activities as well as update the leadership structure of their company, such as organizing members within their platoons). On top of that, platoon leaders (which aren't considered key leadership) are also able to manage members within their platoons. We have enabled seeing analytics on activities based on the type it is assigned to. 
 
 ## Requirements
 
