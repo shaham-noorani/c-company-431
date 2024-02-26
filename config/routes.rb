@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   get '/auth/:provider/callback', to: 'sessions#create'
 
+  get 'analytics', to: 'analytics#index'
+
   # Defines the root path route ("/")
   root "sessions#new"
 end
