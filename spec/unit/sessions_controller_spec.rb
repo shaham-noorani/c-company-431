@@ -19,7 +19,7 @@ RSpec.describe SessionsController, type: :controller do
       end
 
       it "redirects to users path" do
-        expect(response).to redirect_to(users_path)
+        expect(response).to redirect_to(root_path)
       end
 
       it "creates a new user if one doesn't exist" do
