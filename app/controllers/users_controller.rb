@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :check_if_admin
   before_action :set_user, only: %i[show edit update destroy]
 
   # GET /users or /users.json
@@ -8,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1 or /users/1.json
-  def show; end
+  def show;end
 
   # GET /users/new
   def new
@@ -16,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit; end
+  def edit;end
 
   # POST /users or /users.json
   def create
@@ -61,10 +62,21 @@ class UsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
+    platoon = Platoon.find_by(id: @user.platoon_id)
+    @platoon_name = "Platoon name not available"
+    if(platoon)
+      @platoon_name = platoon.name
+    end
   end
 
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:first_name, :last_name, :role, :email, :platoon_id)
+  end
+  def check_if_admin
+    current_user = User.find_by(email: session[":useremail"])
+    if(current_user.nil? || current_user.role != "admin")
+      redirect_to root_path, alert: "Not authorized"
+    end
   end
 end

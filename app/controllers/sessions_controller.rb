@@ -13,7 +13,12 @@ class SessionsController < ApplicationController
         
       )
     end
-    redirect_to(users_path)
+    redirect_to(root_path)
     session[":useremail"] = user_info.info.email
+  end
+  def delete;end
+  def destroy
+    session.delete(":useremail")
+    redirect_to root_path, notice: "You have been logged out."
   end
 end

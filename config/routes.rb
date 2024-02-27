@@ -4,6 +4,8 @@ Rails.application.routes.draw do
       get :mark_complete
     end
   end
+  resources :sessions, only: [:new, :create, :destroy]
+  get '/logout', to: 'sessions#destroy', as: 'logout'
   resources :member_events
   resources :activity_types
   resources :activities
@@ -14,6 +16,6 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
 
   # Defines the root path route ("/")
-  root "sessions#new"
+  root "home#index"
 end
 

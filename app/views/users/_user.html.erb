@@ -1,4 +1,4 @@
-<div id="<%= dom_id user %>">
+<div id="<%= dom_id user, platoon_name %>">
   <p>
     <strong>First name:</strong>
     <%= user.first_name %>
@@ -19,9 +19,10 @@
     <%= user.email %>
   </p>
 
+  
   <p>
     <strong>Platoon:</strong>
-    <%= user.platoon_id %>
-  </p>
+    <%= platoon_name %>
+  </p> 
 
 </div>

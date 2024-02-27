@@ -23,7 +23,7 @@
 
   <div>
     <%= form.label :role, style: "display: block" %>
-    <%= form.text_field :role %>
+    <%= form.select :role, [['Admin', 'admin'], ['Platoon Leader', 'platoon_leader'], ['Pleb', 'pleb']], {selected: user.role}, {class: "form-control"} %>
   </div>
 
   <div>
@@ -33,7 +33,7 @@
 
   <div>
     <%= form.label :platoon_id, style: "display: block" %>
-    <%= form.number_field :platoon_id %>
+    <%= form.select :platoon_id, Platoon.all.map { |platoon| [platoon.name, platoon.id] }, {selected: user.platoon_id}, {class: "form-control"} %>
   </div>
 
   <div>
