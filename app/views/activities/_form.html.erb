@@ -43,13 +43,13 @@
   <br>
 
   <div id="platoon_dropdown" style="display: none;">
-    <%= form.label :platoon_name, 'Select Platoon:', style: "display: block" %>
-    <%= form.select :platoon_name, options_for_select(Platoon.all.map { |platoon| platoon.name }) %>
+    <%= form.label :platoon_id, 'Select Platoon:', style: "display: block" %>
+    <%= form.select :platoon_id, options_for_select([['', '']] + Platoon.all.map { |platoon| [platoon.name, platoon.id] }, selected: '') %>
   </div>
 
   <div id="member_dropdown" style="display: none;">
-    <%= form.label :user_email, 'Select Member:', style: "display: block" %>
-    <%= form.select :user_email, options_for_select(User.all.map { |user| user.email }) %>
+    <%= form.label :user_id, 'Select Member:', style: "display: block" %>
+    <%= form.select :user_id, options_for_select([['', '']]+ User.all.map { |user| [user.email, user.id] }, selected: '') %>
   </div>
 
   <br>

@@ -20,43 +20,47 @@ class ActivitiesController < ApplicationController
   # POST /activities or /activities.json
   def create
     @activity = Activity.new(activity_params)
+    if @activity.save
+      if params[:activity][:platoon_id] != ''
+        logger.info "got to platoon"
+        platoon = Platoon.find(params[:activity][:platoon_id])
+        users_in_platoon = platoon.users
+      
+        users_in_platoon.each do |user|
+          member_activites = MemberActivity.new(
+            user_id: user.id,
+            activity_id: @activity.id,
+            date: nil,
+            start_time: nil,
+            end_time: nil
+          )
+          member_activities.save
+        end
 
-    if params[:assign_to] == 'platoon'
-      platoon = Platoon.find(params[:platoon_id])
-      users_in_platoon = platoon.users
-    
-      users_in_platoon.each do |user|
-        member_activites = MemberActivity.new(
+      elsif params[:activity][:user_id] != ''
+        user = User.find(params[:activity][:user_id])
+        logger.info "activity id: #{@activity.id}"
+        member_activity = MemberActivity.new(
           user_id: user.id,
           activity_id: @activity.id,
           date: nil,
           start_time: nil,
           end_time: nil
         )
-        member_activities.save
+        logger.info("got to member activity save")
+        member_activity.save
+
       end
 
-    elsif params[:assign_to] == 'member'
-      user = User.find(params[:user_id])
-      member_activity = MemberActivity.new(
-        user_id: user.id,
-        activity_id: @activity.id,
-        date: nil,
-        start_time: nil,
-        end_time: nil
-      )
-      member_activity.save
-
-    end
-
-    respond_to do |format|
-      if @activity.save
+      respond_to do |format|
         format.html { redirect_to(activity_url(@activity), notice: 'Activity was successfully created.') }
         format.json { render(:show, status: :created, location: @activity) }
-      else
-        format.html { render(:new, status: :unprocessable_entity) }
-        format.json { render(json: @activity.errors, status: :unprocessable_entity) }
       end
+    
+    
+    else
+      format.html { render(:new, status: :unprocessable_entity) }
+      format.json { render(json: @activity.errors, status: :unprocessable_entity) }
     end
   end
 

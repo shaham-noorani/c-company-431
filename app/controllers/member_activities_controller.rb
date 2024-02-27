@@ -4,7 +4,13 @@ class MemberActivitiesController < ApplicationController
   # GET /member_activities or /member_activities.json
   def index
     # Assuming you have a method to get the current user, like 'current_user'
-    @member_activities = MemberActivity.where(user_id: current_user.id).includes(:activity)
+    @member_activities = []
+    my_user = User.find_by(email: session[":useremail"])
+    if(!my_user.nil?)
+      @member_activities = MemberActivity.where(user_id: my_user.id).includes(:activity)
+
+      logger.info "this is #{@member_activities}"
+    end
   end
 
   # GET /member_activities/1 or /member_activities/1.json
