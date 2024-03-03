@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :check_if_admin
+  before_action :check_if_not_pleb
   before_action :set_user, only: %i[show edit update destroy]
 
   # GET /users or /users.json
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :platoon_id)
+    params.require(:user).permit(:first_name, :last_name, :email, :platoon_id, :military_branch, :class_year)
   end
   
   def user_params_with_role
@@ -81,14 +81,22 @@ class UsersController < ApplicationController
   
   def user_can_change_role?
     current_user = User.find_by(email: session[":useremail"])
-    if(current_user.nil? || current_user.role != "admin")
+    if(current_user.nil? || current_user.role == "pleb")
       return false;
     end
-    return true;
+    if(current_user.check_admin)
+      return true
+    end
+    user_to_update = User.find(params[:id])
+    if(current_user.check_platoon_leader && !user_to_update.check_admin)
+      return true;
+    end
+    return false
   end
-  def check_if_admin
+
+  def check_if_not_pleb
     current_user = User.find_by(email: session[":useremail"])
-    if(current_user.nil? || current_user.role != "admin")
+    if(current_user.nil? || !(current_user.check_admin || current_user.check_platoon_leader))
       redirect_to root_path, alert: "Not authorized"
     end
   end
