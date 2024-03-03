@@ -1,11 +1,10 @@
-<h1>Analytics Logs for Entire C-Company</h1>
-<form action="<%= analytics_logs_path(@platoon) %>" method="get">
+<h1>Logs for <%= @platoon.name %></h1>
+<form action="<%= platoon_logs_path(@platoon) %>" method="get">
   <label for="startDate">Filter Activities After Date:</label>
   <input type="date" id="startDate" name="startDate">
   <button type="submit">Apply Filter</button>
 </form>
 <h2>All Logs for C-Company</h2>
-
 <table style="border: 1px solid black;">
   <thead>
     <tr>

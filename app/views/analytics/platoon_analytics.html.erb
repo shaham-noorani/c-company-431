@@ -1,4 +1,9 @@
-<h1>Platoon Analytics</h1>
+<h1>Platoon Analytics for <%= @platoon.name %></h1>
+<form action="<%= platoon_analytics_path(@platoon) %>" method="get">
+  <label for="startDate">Filter Activities After Date:</label>
+  <input type="date" id="startDate" name="startDate">
+  <button type="submit">Apply Filter</button>
+</form>
 <table style="border: 1px solid black;">
   <thead>
     <tr>
@@ -93,3 +98,6 @@
     </tr>
   </tbody>
 </table>
+<%= link_to "Back to analytics", analytics_path %>
+<br>
+<%= link_to @platoon.name, platoon_logs_path(platoon_id: @platoon.id) %>
