@@ -1,1 +1,26 @@
 <h1>Analytics Page</h1>
+
+<h2>Activity Types</h2>
+<table style="border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity Type</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Number of Activities</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Amount of Type Assigned</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @activity_counts_by_type.keys.each do |activity_type_id| %>
+      <% activity_type = ActivityType.find(activity_type_id) %>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= activity_type.name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= @activity_counts_by_type[activity_type_id] || 0 %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= @activity_counts_by_type2[activity_type_id] || 0 %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+</table>
+
+
