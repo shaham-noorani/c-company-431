@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1 or /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
+      if @user.update(user_params_with_role)
         format.html { redirect_to(user_url(@user), notice: 'User was successfully updated.') }
         format.json { render(:show, status: :ok, location: @user) }
       else
@@ -69,9 +69,22 @@ class UsersController < ApplicationController
     end
   end
 
-  # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :role, :email, :platoon_id)
+    params.require(:user).permit(:first_name, :last_name, :email, :platoon_id)
+  end
+  
+  def user_params_with_role
+    permitted_params = user_params
+    permitted_params[:role] = params[:user][:role] if user_can_change_role?
+    permitted_params
+  end
+  
+  def user_can_change_role?
+    current_user = User.find_by(email: session[":useremail"])
+    if(current_user.nil? || current_user.role != "admin")
+      return false;
+    end
+    return true;
   end
   def check_if_admin
     current_user = User.find_by(email: session[":useremail"])
