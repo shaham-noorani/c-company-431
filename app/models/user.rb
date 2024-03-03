@@ -67,7 +67,7 @@ class User < ApplicationRecord
   end
   def check_admin
     Rails.logger.debug role
-    return ["admin", "first_sergeant", "commander"].include?(role)
+    return ["admin", "first_sergeant", "commander", "executive"].include?(role)
   end
   def check_platoon_leader
     Rails.logger.debug role
