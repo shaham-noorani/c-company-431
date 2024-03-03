@@ -22,12 +22,11 @@
 </div>
 <div>
   <!-- Button to toggle completed activities -->
-  <button id="toggleCompletedActivities" class="btn btn-info">Show Completed Activities</button>
+  <button id="toggleCompletedActivities" class="btn btn-info" type="button">Show Completed Activities</button>
 </div>
 <%= link_to "New Member Activity", new_member_activity_path, class: 'btn btn-primary' %>
 
 <script>
-  // JavaScript to toggle completed activities
   document.addEventListener("DOMContentLoaded", function() {
     const toggleButton = document.getElementById("toggleCompletedActivities");
     toggleButton.addEventListener("click", function() {
