@@ -1,6 +1,4 @@
-<h1>Analytics Page</h1>
-
-<h2>Activity Types</h2>
+<h1>Platoon Analytics</h1>
 <table style="border: 1px solid black;">
   <thead>
     <tr>
@@ -45,7 +43,6 @@
     </tr>
   </tbody>
 </table>
-
 
 <br>
 <h2>Activities</h2>
@@ -96,17 +93,3 @@
     </tr>
   </tbody>
 </table>
-
-<%= link_to "View Logs", '/analytics/analytics_logs' %>
-
-
-<br>
-<ul>
-  <% @platoons.each do |platoon| %>
-    <li>
-      <%= link_to platoon.name, platoon_analytics_path(platoon_id: platoon.id) %>
-    </li>
-  <% end %>
-</ul>
-
-
