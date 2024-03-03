@@ -20,9 +20,10 @@
 <br>
 
   <div>
-    <%= form.label :activity_type_name, style: "display: block" %>
-    <%= form.select :activity_type_name, ActivityType.all.map { |type| type.name } %>
+    <%= form.label :activity_type_id, style: "display: block" %>
+    <%= form.select :activity_type_id, ActivityType.order(:name).map { |type| [type.name, type.id] }, include_blank: true, id: "id_of_the_activity_type_id_select_box" %>
   </div>
+
 
 
   <br>
