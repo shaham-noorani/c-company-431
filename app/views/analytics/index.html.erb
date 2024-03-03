@@ -7,20 +7,130 @@
       <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity Type</th>
       <th style="border: 1px solid black; padding: 8px; text-align: left;">Number of Activities</th>
       <th style="border: 1px solid black; padding: 8px; text-align: left;">Amount of Type Assigned</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Percentage Completed</th>
     </tr>
   </thead>
   <tbody>
+    <% total_activities = 0 %>
+    <% total_assigned = 0 %>
+    <% total_completed = 0 %>
     <% @activity_counts_by_type.keys.each do |activity_type_id| %>
       <% activity_type = ActivityType.find(activity_type_id) %>
+      <% total_activities += @activity_counts_by_type[activity_type_id] || 0 %>
+      <% assigned_count = @memberactivity_counts_by_type[activity_type_id] || 0 %>
+      <% completed_count = @memberactivity_completed_by_type[activity_type_id] || 0 %>
+      <% total_assigned += assigned_count %>
+      <% total_completed += completed_count %>
       <tr>
         <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= activity_type.name %></td>
         <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= @activity_counts_by_type[activity_type_id] || 0 %></td>
-        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= @activity_counts_by_type2[activity_type_id] || 0 %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= assigned_count %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= completed_count %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+          <% percentage_completed = assigned_count > 0 ? (completed_count.to_f / assigned_count * 100).round(2) : 0 %>
+          <%= percentage_completed %>%
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;"><strong>Total</strong></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= total_activities %></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= total_assigned %></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= total_completed %></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">
+        <% percentage_completed = total_assigned > 0 ? (total_completed.to_f / total_assigned * 100).round(2) : 0 %>
+        <%= percentage_completed %>%
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<br>
+<h2>Activities</h2>
+<table style="border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Type</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Count</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Completion Percentage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% total_count = 0 %>
+    <% total_completed_count = 0 %>
+    <% @memberactivity_counts_by_activity.each do |activity_id, count| %>
+      <% activity = Activity.find(activity_id) %>
+      <% activity_type = activity.activity_type %>
+      <% completed_count = @memberactivity_completed[activity_id] || 0 %>
+      <% total_count += count %>
+      <% total_completed_count += completed_count %>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= activity.name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= activity_type.name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= count %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= completed_count %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+          <% if count > 0 %>
+            <%= sprintf("%.2f", (completed_count.to_f / count) * 100) %>%
+          <% else %>
+            0%
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="2" style="border: 1px solid black; padding: 8px; text-align: left;"><strong>Total</strong></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= total_count %></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= total_completed_count %></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">
+        <% if total_count > 0 %>
+          <%= sprintf("%.2f", (total_completed_count.to_f / total_count) * 100) %>%
+        <% else %>
+          0%
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<h2>Logs</h2>
+<table style="border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity Name</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">User Name</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Platoon</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Date</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Start Time</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">End Time</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @member_activities.each do |member_activity| %>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.activity.name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.user.first_name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.user.platoon.name if member_activity.user.platoon %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.date.strftime("%B %d, %Y") if member_activity.date %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.start_time.strftime("%I:%M %p") if member_activity.start_time %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.end_time.strftime("%I:%M %p") if member_activity.end_time %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.completed ? 'Yes' : 'No' %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-</table>
-
-
