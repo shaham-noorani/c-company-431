@@ -5,6 +5,6 @@ class Activity < ApplicationRecord
   has_many :users, through: :member_activities
 
   validates :name, presence: true, length: { maximum: 255 }
-  # validates :activity_type_id, presence: true
+  validates :activity_type_id, presence: true
   validates :description, presence: true
 end

@@ -6,7 +6,8 @@
 
   <p>
     <strong>Activity type:</strong>
-    <%= activity.activity_type_name %>
+    <% activity_type = ActivityType.find(activity.activity_type_id) %>
+    <%= activity_type.name %>
   </p>
 
   <p>
