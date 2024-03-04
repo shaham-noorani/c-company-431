@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe(AnalyticsController, type: :controller) do
+     before do
+          User.create!(first_name: 'Test', last_name: 'User', email: 'user@example.com', role: 'admin')
+          session[":useremail"] = "user@example.com"
+     end
      describe 'GET #index' do
           it 'returns http success' do
                get :index
