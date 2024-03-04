@@ -66,6 +66,7 @@ class ActivitiesController < ApplicationController
 
   # POST /activities/1/assign_to_user
   def assign_to_member
+
     @activity = Activity.find(params[:id])
     user = User.find(params[:activity][:user_id])
     logger.info(user_id)
@@ -79,25 +80,19 @@ class ActivitiesController < ApplicationController
     )
     if member_activity.save
       redirect_to @activity, notice: 'Activity was successfully assigned to the member.'
-    else
-      logger.error("Error saving member_activity: #{member_activity.errors.full_messages}")
     end
+
+
+
   end
 
-  #     elsif params[:activity][:user_id] != ''
-  #       user = User.find(params[:activity][:user_id])
-  #       logger.info "activity id: #{@activity.id}"
-  #       member_activity = MemberActivity.new(
-  #         user_id: user.id,
-  #         activity_id: @activity.id,
-  #         date: nil,
-  #         start_time: nil,
-  #         end_time: nil
-  #       )
-  #       logger.info("got to member activity save")
-  #       member_activity.save
+  def assign_member
+    @activity = Activity.find(params[:activity_id])
+    logger.info("works")
+    # Process form submission
+  end
 
-  #     end
+
 
 
 

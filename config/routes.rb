@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get 'reassign', on: :member
     post 'assign_to_platoon', on: :member
     post 'assign_to_user', on: :member
+    post 'assign_member/:activity_id', to: 'activities#assign_member', as: 'assign_member'
   end
   resources :events
   resources :users
@@ -20,6 +21,8 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
 
   get 'analytics', to: 'analytics#index'
+
+  get '/activities/assign_member/:activity_id', to: 'activities#assign_member', as: 'assign_member'
 
   # Defines the root path route ("/")
   root "home#index"

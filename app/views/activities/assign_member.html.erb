@@ -1,0 +1,10 @@
+<h1>HELLO</h1>
+
+
+<h1>Platoon Analytics for <%= @activity.name %></h1>
+
+<%= form_with(model: @activity, url: assign_member_path(@activity), method: :post) do |form| %>
+    <!-- Form inputs and elements go here -->
+    <%= form.submit "Assign Member" %>
+  <% end %>
+  
