@@ -6,6 +6,9 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @my_user = User.find_by(email: session[":useremail"])
+    if(@my_user.check_platoon_leader)
+      @users = User.where(platoon_id: @my_user.platoon_id)
+    end
   end
 
   # GET /users/1 or /users/1.json

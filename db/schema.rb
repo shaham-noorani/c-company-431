@@ -49,7 +49,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_03_004459) do
     t.time "start_time"
     t.time "end_time"
     t.boolean "completed"
-    t.string "user_email"
   end
 
   create_table "member_events", force: :cascade do |t|
