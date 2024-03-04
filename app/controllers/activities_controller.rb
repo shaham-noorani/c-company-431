@@ -66,6 +66,7 @@ class ActivitiesController < ApplicationController
 
   # POST /activities/1/assign_to_user
   def assign_to_member
+
     @activity = Activity.find(params[:id])
     user = User.find(params[:activity][:user_id])
     logger.info(user_id)
@@ -82,7 +83,17 @@ class ActivitiesController < ApplicationController
       redirect_to @activity, notice: 'Activity was successfully assigned to the member.'
     end
 
+
+
   end
+
+  def assign_member
+    @activity = Activity.find(params[:activity_id])
+    logger.info("works")
+    # Process form submission
+  end
+
+
 
 
 
