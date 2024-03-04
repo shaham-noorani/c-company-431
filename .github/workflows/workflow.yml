@@ -45,7 +45,7 @@ jobs:
           brakeman -o brakeman.txt
       - name: Run rubocop
         run: |
-          bundler exec rubocop --out rubocop.txt
+          bundler exec rubocop --force-exclusion vendor/*/** --out rubocop.txt
       - name: Upload coverage results
         uses: actions/upload-artifact@master
         if: always()
