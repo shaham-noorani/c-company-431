@@ -24,7 +24,8 @@ class UsersController < ApplicationController
 
   # POST /users or /users.json
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params_with_role)
+    Rails.logger.info "got hrere"
 
     respond_to do |format|
       if @user.save
