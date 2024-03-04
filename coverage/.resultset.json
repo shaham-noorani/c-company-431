@@ -812,81 +812,6 @@
         "branches": {
         }
       },
-      "/csce431/c-company-431/app/controllers/member_events_controller.rb": {
-        "lines": [
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          null,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
       "/csce431/c-company-431/app/helpers/activities_helper.rb": {
         "lines": [
           0,
@@ -981,25 +906,8 @@
         ],
         "branches": {
         }
-      },
-      "/csce431/c-company-431/app/models/member_event.rb": {
-        "lines": [
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
       }
     },
-    "timestamp": 1709533621
+    "timestamp": 1709533987
   }
 }
