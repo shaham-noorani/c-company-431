@@ -77,12 +77,27 @@ class ActivitiesController < ApplicationController
       start_time: nil,
       end_time: nil
     )
-
     if member_activity.save
       redirect_to @activity, notice: 'Activity was successfully assigned to the member.'
+    else
+      logger.error("Error saving member_activity: #{member_activity.errors.full_messages}")
     end
-
   end
+
+  #     elsif params[:activity][:user_id] != ''
+  #       user = User.find(params[:activity][:user_id])
+  #       logger.info "activity id: #{@activity.id}"
+  #       member_activity = MemberActivity.new(
+  #         user_id: user.id,
+  #         activity_id: @activity.id,
+  #         date: nil,
+  #         start_time: nil,
+  #         end_time: nil
+  #       )
+  #       logger.info("got to member activity save")
+  #       member_activity.save
+
+  #     end
 
 
 
