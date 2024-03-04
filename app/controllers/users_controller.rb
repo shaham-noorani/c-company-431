@@ -16,7 +16,6 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User.new
   end
 
   # GET /users/1/edit
@@ -40,6 +39,8 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
+    custom_logger = Logger.new(STDOUT)
+    custom_logger.debug("Attempting to update user with params: #{user_params_with_role.inspect}")
     respond_to do |format|
       if @user.update(user_params_with_role)
         format.html { redirect_to(user_url(@user), notice: 'User was successfully updated.') }
@@ -79,7 +80,10 @@ class UsersController < ApplicationController
   
   def user_params_with_role
     permitted_params = user_params
-    permitted_params[:role] = params[:user][:role] if user_can_change_role?
+    if(user_can_change_role? && params[:user][:role].present?)
+      permitted_params[:role] = params[:user][:role] if user_can_change_role?
+    end 
+    
     permitted_params
   end
   

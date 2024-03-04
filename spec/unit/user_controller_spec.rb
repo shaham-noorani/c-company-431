@@ -63,7 +63,63 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(User.last)
       end
     end
+    context "with invalid params" do
+      let(:invalid_atts){
+        {
+          first_name:"jane"
+        } 
+      }
+      it "doesn't create a new User" do
+        session[":useremail"] = "joe@gmail.com"
+        expect{
+          post :create, params: {user: invalid_atts}
+        }.to change(User, :count).by(0)
+      end
+    end
+  end
 
+  describe "POST #update" do
+    context "with valid params" do
+      let!(:user_update) { User.create!(first_name: "joe", last_name: "bob", role: "pleb", email: "bob@gmail.com") }
+      let(:new_attributes) {
+        { first_name: "UpdatedName" }
+      }
+      it 'updates the requested user' do
+        session[":useremail"] = "joe@gmail.com"
+        patch :update, params: { id: user_update.id, user: new_attributes }
+        user_update.reload
+        expect(user_update.first_name).to eq("UpdatedName")
+      end
+  
+      it 'redirects to the user' do
+        session[":useremail"] = "joe@gmail.com"
+        patch :update, params: { id: user_update.id, user: new_attributes }
+        expect(response).to redirect_to(user_url(user_update))
+      end
+    end
+    context "with invalid params" do
+      let!(:user_update) { User.create!(first_name: "joe", last_name: "bob", role: "pleb", email: "bob@gmail.com") }
+      let(:new_attributes) {
+        { first_name: nil }
+      }
+      it 'does not update the requested user' do
+        session[":useremail"] = "joe@gmail.com"
+        patch :update, params: { id: user_update.id, user: new_attributes }
+        user_update.reload
+        expect(user_update.first_name).to eq("joe")
+      end
+    end
+    context "pleb tries updating" do
+      let!(:user_update) { User.create!(first_name: "joe", last_name: "bob", role: "pleb", email: "bob@gmail.com") }
+      let(:new_attributes) {
+        { first_name: "joe" }
+      }
+      it 'does not update the requested user' do
+        patch :update, params: { id: user_update.id, user: new_attributes }
+        user_update.reload
+        expect(user_update.first_name).to eq("joe")
+      end
+    end
   end
 
 end
