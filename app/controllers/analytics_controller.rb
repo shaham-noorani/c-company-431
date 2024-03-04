@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AnalyticsController < ApplicationController
      before_action :check_if_not_admin
      def index

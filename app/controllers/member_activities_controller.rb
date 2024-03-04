@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MemberActivitiesController < ApplicationController
      before_action :set_member_activity, only: %i[show edit update destroy mark_complete]
 
@@ -54,7 +56,7 @@ class MemberActivitiesController < ApplicationController
 
      # DELETE /member_activities/1 or /member_activities/1.json
      def destroy
-          @member_activity.destroy
+          @member_activity.destroy!
           respond_to do |format|
                format.html { redirect_to(member_activities_url, notice: 'Member activity was successfully destroyed.') }
                format.json { head(:no_content) }

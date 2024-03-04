@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/activity.rb
 class Activity < ApplicationRecord
      belongs_to :activity_type, optional: true

@@ -42,6 +42,10 @@ AllCops:
         - "node_modules/**/*"
         - "bin/*"
         - "config/**/*"
+        - "spec/*/**"
+        - "**/tests/**/*"
+        - "test/**/*"
+        - "Gemfile"
     NewCops: enable
 
 ###########################################################

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
      before_action :check_if_not_pleb
      before_action :set_user, only: %i[show edit update destroy]
@@ -23,7 +25,6 @@ class UsersController < ApplicationController
      # POST /users or /users.json
      def create
           @user = User.new(user_params_with_role)
-          Rails.logger.info('got hrere')
 
           respond_to do |format|
                if @user.save
@@ -51,7 +52,7 @@ class UsersController < ApplicationController
 
      # DELETE /users/1 or /users/1.json
      def destroy
-          @user.destroy
+          @user.destroy!
 
           respond_to do |format|
                format.html { redirect_to(users_url, notice: 'User was successfully destroyed.') }
@@ -91,10 +92,7 @@ class UsersController < ApplicationController
      end
 
      def check_if_not_pleb
-          custom_logger = Logger.new(STDOUT)
-          custom_logger.debug("session user is: #{session[':useremail']}")
           current_user = User.find_by(email: session[':useremail'])
-          custom_logger.debug("current user is: #{current_user}")
           redirect_to(root_path, alert: 'Not authorized') if current_user.nil? || !(current_user.check_admin || current_user.check_platoon_leader)
      end
 end

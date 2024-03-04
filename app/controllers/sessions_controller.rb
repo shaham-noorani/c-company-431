@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SessionsController < ApplicationController
      def new; end
 
@@ -5,7 +7,7 @@ class SessionsController < ApplicationController
           user_info = request.env['omniauth.auth']
           user = User.find_by(email: user_info.info.email)
           if user.nil?
-               user = User.create!(
+               User.create!(
                     first_name: user_info.info.first_name,
                     last_name: user_info.info.last_name,
                     email: user_info.info.email,

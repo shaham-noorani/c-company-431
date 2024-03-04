@@ -47,17 +47,6 @@ RSpec.describe(User, type: :model) do
           expect(association.options[:optional]).to(eq(true))
      end
 
-     it 'has many member_events' do
-          association = described_class.reflect_on_association(:member_events)
-          expect(association.macro).to(eq(:has_many))
-     end
-
-     it 'has many events through member_events' do
-          association = described_class.reflect_on_association(:events)
-          expect(association.macro).to(eq(:has_many))
-          expect(association.options[:through]).to(eq(:member_events))
-     end
-
      it 'has many member_activities' do
           association = described_class.reflect_on_association(:member_activities)
           expect(association.macro).to(eq(:has_many))

@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 # app/models/user.rb
 class User < ApplicationRecord
      belongs_to :platoon, optional: true
-     has_many :member_events
-     has_many :events, through: :member_events
-     has_many :member_activities
+     has_many :member_activities, dependent: :destroy
      has_many :activities, through: :member_activities
 
      validates :first_name, presence: true, length: { maximum: 255 }
@@ -27,6 +27,8 @@ class User < ApplicationRecord
           'squad_leader' => 'Squad Leader',
           'pleb' => 'Member'
      }.freeze
+     public_constant :ROLE_DISPLAY_NAMES
+
      YEAR_DISPLAY_NAMES = {
           'freshman' => 'Freshman',
           'sophomore' => 'Sophomore',
@@ -34,6 +36,7 @@ class User < ApplicationRecord
           'senior' => 'Senior',
           'none' => 'None'
      }.freeze
+     public_constant :YEAR_DISPLAY_NAMES
      BRANCH_DISPLAY_NAMES = {
           'army' => 'Army',
           'navy' => 'Navy',
@@ -43,7 +46,7 @@ class User < ApplicationRecord
           'national_guard' => 'National Guard',
           'none' => 'None'
      }.freeze
-
+     public_constant :BRANCH_DISPLAY_NAMES
      def display_role
           if role.nil?
                ''

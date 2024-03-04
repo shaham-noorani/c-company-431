@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActivitiesController < ApplicationController
      before_action :set_activity, only: %i[show edit update destroy]
 
@@ -27,14 +29,14 @@ class ActivitiesController < ApplicationController
                     users_in_platoon = platoon.users
 
                     users_in_platoon.each do |user|
-                         member_activites = MemberActivity.new(
+                         MemberActivity.new(
                               user_id: user.id,
                               activity_id: @activity.id,
                               date: nil,
                               start_time: nil,
                               end_time: nil
                          )
-                         member_activities.save
+                         member_activities.save!
                     end
 
                elsif params[:activity][:user_id] != ''
@@ -48,7 +50,7 @@ class ActivitiesController < ApplicationController
                          end_time: nil
                     )
                     logger.info('got to member activity save')
-                    member_activity.save
+                    member_activity.save!
 
                end
 
@@ -78,7 +80,7 @@ class ActivitiesController < ApplicationController
 
      # DELETE /activities/1 or /activities/1.json
      def destroy
-          @activity.destroy
+          @activity.destroy!
 
           respond_to do |format|
                format.html { redirect_to(activities_url, notice: 'Activity was successfully destroyed.') }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActivityTypesController < ApplicationController
      before_action :set_activity_type, only: %i[show edit update destroy]
 
@@ -47,7 +49,7 @@ class ActivityTypesController < ApplicationController
 
      # DELETE /activity_types/1 or /activity_types/1.json
      def destroy
-          @activity_type.destroy
+          @activity_type.destroy!
 
           respond_to do |format|
                format.html { redirect_to(activity_types_url, notice: 'Activity type was successfully destroyed.') }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PlatoonsController < ApplicationController
      before_action :set_platoon, only: %i[show edit update destroy]
 
@@ -47,7 +49,7 @@ class PlatoonsController < ApplicationController
 
      # DELETE /platoons/1 or /platoons/1.json
      def destroy
-          @platoon.destroy
+          @platoon.destroy!
 
           respond_to do |format|
                format.html { redirect_to(platoons_url, notice: 'Platoon was successfully destroyed.') }
