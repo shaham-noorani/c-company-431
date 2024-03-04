@@ -16,6 +16,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    @user = User.new
   end
 
   # GET /users/1/edit
@@ -39,8 +40,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    custom_logger = Logger.new(STDOUT)
-    custom_logger.debug("Attempting to update user with params: #{user_params_with_role.inspect}")
+    
     respond_to do |format|
       if @user.update(user_params_with_role)
         format.html { redirect_to(user_url(@user), notice: 'User was successfully updated.') }
@@ -89,9 +89,6 @@ class UsersController < ApplicationController
   
   def user_can_change_role?
     current_user = User.find_by(email: session[":useremail"])
-    if(current_user.nil? || current_user.role == "pleb")
-      return false;
-    end
     if(current_user.check_admin)
       return true
     end
@@ -103,7 +100,10 @@ class UsersController < ApplicationController
   end
 
   def check_if_not_pleb
+    custom_logger = Logger.new(STDOUT)
+    custom_logger.debug("session user is: #{session[":useremail"]}")
     current_user = User.find_by(email: session[":useremail"])
+    custom_logger.debug("current user is: #{current_user}")
     if(current_user.nil? || !(current_user.check_admin || current_user.check_platoon_leader))
       redirect_to root_path, alert: "Not authorized"
     end

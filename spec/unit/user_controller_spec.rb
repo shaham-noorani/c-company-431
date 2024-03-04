@@ -4,7 +4,6 @@ RSpec.describe UsersController, type: :controller do
   let(:user) { User.create!(first_name: "joe", last_name: "bob", role: "admin", email: "joe@gmail.com") }
   let(:platoon_leader) { User.create!(first_name: "joe", last_name: "bob", role: "platoon_leader", email: "joe@fmail.com") }
   let(:pleb_user) { User.create!(first_name: "joe", last_name: "bob", role: "pleb", email: "joe@bmail.com") }
-
   before do
     allow(controller).to receive(:current_user).and_return(user)
   end
@@ -109,15 +108,17 @@ RSpec.describe UsersController, type: :controller do
         expect(user_update.first_name).to eq("joe")
       end
     end
-    context "pleb tries updating" do
+    context "platoon_leader tries updating" do
       let!(:user_update) { User.create!(first_name: "joe", last_name: "bob", role: "pleb", email: "bob@gmail.com") }
+      User.create!(first_name: "platoon", last_name: "leader", role: "platoon_leader", email: "abc@gmail.com")
       let(:new_attributes) {
-        { first_name: "joe" }
+        { first_name: "bob" }
       }
-      it 'does not update the requested user' do
+      it 'updates the requested user' do
+        session[":useremail"] = "abc@gmail.com"
         patch :update, params: { id: user_update.id, user: new_attributes }
         user_update.reload
-        expect(user_update.first_name).to eq("joe")
+        expect(user_update.first_name).to eq("bob")
       end
     end
   end

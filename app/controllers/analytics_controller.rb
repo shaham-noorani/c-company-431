@@ -1,4 +1,5 @@
 class AnalyticsController < ApplicationController
+    before_action :check_if_not_admin
     def index
       
         # Retrieve the filter parameter from the form
@@ -139,6 +140,10 @@ class AnalyticsController < ApplicationController
       
         render 'platoon_logs'
       end
-      
+      def check_if_not_admin
+        if(current_user.nil? || !current_user.check_admin)
+          redirect_to root_path, alert: "Not authorized"
+        end
+      end
   end
   
