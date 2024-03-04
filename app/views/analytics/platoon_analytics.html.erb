@@ -1,10 +1,9 @@
-<h1>Analytics for all of C-Company</h1>
-<form action="<%= analytics_path(@platoon) %>" method="get">
+<h1>Platoon Analytics for <%= @platoon.name %></h1>
+<form action="<%= platoon_analytics_path(@platoon) %>" method="get">
   <label for="startDate">Filter Activities After Date:</label>
   <input type="date" id="startDate" name="startDate">
   <button type="submit">Apply Filter</button>
 </form>
-<h2>Activity Types</h2>
 <table style="border: 1px solid black;">
   <thead>
     <tr>
@@ -49,7 +48,6 @@
     </tr>
   </tbody>
 </table>
-
 
 <br>
 <h2>Activities</h2>
@@ -100,25 +98,6 @@
     </tr>
   </tbody>
 </table>
-
-
+<%= link_to "Back to analytics", analytics_path %>
 <br>
-<p>Platoon Specific analytics</p>
-<ul>
-  <% @platoons.each do |platoon| %>
-    <li>
-      <%= link_to platoon.name, platoon_analytics_path(platoon_id: platoon.id) %>
-    </li>
-  <% end %>
-</ul>
-
-<%= link_to "View Logs", '/analytics/analytics_logs' %>
-<ul>
-  <% @platoons.each do |platoon| %>
-    <li>
-      <%= link_to platoon.name, platoon_logs_path(platoon_id: platoon.id) %>
-    </li>
-  <% end %>
-</ul>
-
-
+<%= link_to @platoon.name, platoon_logs_path(platoon_id: @platoon.id) %>
