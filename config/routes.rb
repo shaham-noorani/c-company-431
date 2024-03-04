@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy', as: 'logout'
   resources :member_events
   resources :activity_types
-  resources :activities
+  resources :activities do
+    get 'reassign', on: :member
+    post 'assign_to_platoon', on: :member
+    post 'assign_to_user', on: :member
+  end
   resources :events
   resources :users
   resources :platoons
