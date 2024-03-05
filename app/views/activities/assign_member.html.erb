@@ -1,19 +1,18 @@
 <h1>HELLO</h1>
 
-
 <h1>Member Assignment for <%= @user_id %></h1>
 
-<%= form_with(model: @activity, url: assign_member_path(@activity), method: :post) do |form| %>
-    <!-- Form inputs and elements go here -->
-
-
-  <div id="member_dropdown" style="display: block;">
-    <%= form.label :user_id, 'Select Member:', style: "display: block" %>
-    <%= form.select :user_id, options_for_select(User.all.map { |user| [user.email, user.id] }), prompt: 'Select a Member' %>
-  </div>
-
-
-
-    <%= form.submit "Assign Member" %>
+<%= form_with(url: another_function_path, method: :post) do |form| %>
+    <!-- Hidden field for activity_id -->
+    <%= form.hidden_field :activity_id, value: @activity.id %>
+  
+    <div class="field">
+      <%= form.label :user_id, 'Select User:' %>
+      <%= form.select :user_id, options_for_select(@users.map { |user| [user.email, user.id] }) %>
+    </div>
+  
+    <%= form.submit "Submit" %>
   <% end %>
+  
+  
   
