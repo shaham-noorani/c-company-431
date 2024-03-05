@@ -88,10 +88,21 @@ class ActivitiesController < ApplicationController
     logger.info(user_id)
     logger.info(params[:activity_id])
     logger.info("!!!!!!!!!!!!!!!!!!!")
+
+    @activity = Activity.find(params[:activity_id])
+
+    member_activity = MemberActivity.new(
+      user_id: user.id,
+      activity_id: @activity.id,
+      datetime.now: nil,
+      start_time: nil,
+      end_time: nil
+    )
+
+    if member_activity.save
+      redirect_to @activity, notice: 'Activity was successfully assigned to the member.'
+    end
   end
-
-
-
 
 
 
@@ -109,7 +120,7 @@ class ActivitiesController < ApplicationController
       member_activity = MemberActivity.new(
         user_id: user.id,
         activity_id: @activity.id,
-        date: nil,
+        date.now: nil,
         start_time: nil,
         end_time: nil
       )
