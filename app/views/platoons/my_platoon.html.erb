@@ -1,0 +1,8 @@
+<h1>My Platoon - <%= current_user.platoon.name %></h1>
+<ul>
+  <% @members.each do |member| %>
+    <li>
+      <%= member.first_name %> <%= member.last_name %> - <%= member.member_activities.reject(&:completed?).count %> activities uncompleted
+    </li>
+  <% end %>
+</ul>
