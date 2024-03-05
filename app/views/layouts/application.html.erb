@@ -68,9 +68,11 @@
       <% end %>
       <li class="nav-item">
         <%= link_to 'Login', new_session_path, class: 'nav-link' %>
-      <li class="nav-item">
-        <%= link_to 'Analytics', analytics_path, class: 'nav-link' %>
-      </li>
+      <%  if(User.find_by(email: session[":useremail"])&.check_admin) %>
+        <li class="nav-item">
+          <%= link_to 'Analytics', analytics_path, class: 'nav-link' %>
+        </li>
+      <% end %>
       <!-- Add more navigation links as needed -->
     </ul>
   </div>
