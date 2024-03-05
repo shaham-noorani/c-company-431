@@ -89,14 +89,14 @@ class ActivitiesController < ApplicationController
   def assign_member
     @user_id = params[:user_id]
     @activity = Activity.find(params[:activity_id])
-    logger.info("works")
+    #logger.info("works")
+    logger.info("assign member function acessed")
     logger.info(params[:user_id])
   
     # Ensure params[:activity] is present
     if params[:user_id].present?
       user = User.find(params[:user_id])
       
-  
       member_activity = MemberActivity.new(
         user_id: user.id,
         activity_id: @activity.id,
@@ -113,7 +113,33 @@ class ActivitiesController < ApplicationController
   
 
 
-  #def assign_platoon
+  def assign_platoon
+
+    @activity = Activity.find(params[:activity_id])
+    logger.info("platoon assign function accessed")
+    logger.info(params[:platoon_id])
+
+    if params[:platoon_id].present?
+      platoon = Platoon.find(params[:platoon_id])
+      users_in_platoon = platoon.users
+        
+      users_in_platoon.each do |user|
+        member_activites = MemberActivity.new(
+          user_id: user.id,
+          activity_id: @activity.id,
+          date: nil,
+          start_time: nil,
+          end_time: nil
+        )
+
+        if member_activity.save
+          redirect_to @activity, notice: 'Activity was successfully assigned to the platoon.'
+        end
+      end
+    end
+
+  end 
+
 
 
 
