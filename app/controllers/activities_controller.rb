@@ -94,9 +94,9 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:activity_id])
 
     member_activity = MemberActivity.new(
-      user_id: user.id,
+      user_id: user_id,
       activity_id: @activity.id,
-      datetime.now: nil,
+      date: nil,
       start_time: nil,
       end_time: nil
     )
@@ -122,7 +122,7 @@ class ActivitiesController < ApplicationController
       member_activity = MemberActivity.new(
         user_id: user.id,
         activity_id: @activity.id,
-        date.now: nil,
+        date: nil,
         start_time: nil,
         end_time: nil
       )
