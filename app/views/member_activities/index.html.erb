@@ -6,8 +6,8 @@
   <% @member_activities.each do |member_activity| %>
     <!-- Add a class to indicate completion status -->
     <div class="member_activity <%= 'completed' if member_activity.completed %>" style="<%= 'display: none;' if member_activity.completed %>">
-      <p><strong>Activity:</strong> <%= member_activity.activity.name %></p>
-      <p><strong>Description:</strong> <%= member_activity.activity.description %></p>
+      <p><strong>Activity:</strong> <%= member_activity.activity&.name %></p>
+      <p><strong>Description:</strong> <%= member_activity.activity&.description %></p>
       <p><strong>Status:</strong> <%= member_activity.completed ? 'Completed' : 'Pending' %></p>
 
       <% unless member_activity.completed %>

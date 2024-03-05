@@ -6,13 +6,21 @@
 
   <p>
     <strong>Activity type:</strong>
-    <% activity_type = ActivityType.find(activity.activity_type_id) %>
-    <%= activity_type.name %>
+    <% activity_type = ActivityType.find_by(id: activity.activity_type_id) %>
+    <%= activity_type.name if activity_type %>
   </p>
 
   <p>
     <strong>Description:</strong>
     <%= activity.description %>
   </p>
+
+  <!-- Option to reassign already created activities -->
+  <%= link_to "Assign to Member", assign_member_path(activity), class: "btn btn-primary" %>
+
+  <br>
+
+  <%= link_to "Assign to Platoon", assign_platoon_path(activity), class: "btn btn-primary" %>
+  
 
 </div>

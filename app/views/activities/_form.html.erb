@@ -1,3 +1,4 @@
+
 <%= form_with(model: activity) do |form| %>
   <% if activity.errors.any? %>
     <div style="color: red">
@@ -24,60 +25,20 @@
     <%= form.select :activity_type_id, ActivityType.order(:name).map { |type| [type.name, type.id] }, include_blank: true, id: "id_of_the_activity_type_id_select_box" %>
   </div>
 
-
-
   <br>
-
   
   <div>
     <p> Description </p>
     <%= form.text_field :description %>
   </div>
   <br>
-  <div>
-    <p> Assign To </p>
-    <button type="button" id="assign_to_platoon">Platoon</button>
-    <button type="button" id="assign_to_member">Member</button>
-  </div>
-
   
   <br>
 
-  <div id="platoon_dropdown" style="display: none;">
-    <%= form.label :platoon_id, 'Select Platoon:', style: "display: block" %>
-    <%= form.select :platoon_id, options_for_select([['', '']] + Platoon.all.map { |platoon| [platoon.name, platoon.id] }, selected: '') %>
-  </div>
-
-  <div id="member_dropdown" style="display: none;">
-    <%= form.label :user_id, 'Select Member:', style: "display: block" %>
-    <%= form.select :user_id, options_for_select([['', '']]+ User.all.map { |user| [user.email, user.id] }, selected: '') %>
-  </div>
-
-  <br>
 
   <div>
     <%= form.submit %>
   </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var platoonDropdown = document.getElementById("platoon_dropdown");
-      var memberDropdown = document.getElementById("member_dropdown");
-
-      document.getElementById("assign_to_platoon").addEventListener("click", function() {
-        platoonDropdown.style.display = "block";
-        memberDropdown.style.display = "none";
-      });
-
-      document.getElementById("assign_to_member").addEventListener("click", function() {
-        platoonDropdown.style.display = "none";
-        memberDropdown.style.display = "block";
-      });
-    });
-  </script>
-
-
-
 
 <% end %>
 
