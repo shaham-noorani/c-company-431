@@ -61,7 +61,7 @@
       <li class="nav-item">
         <%= link_to 'Activity types', activity_types_path, class: 'nav-link' %>
       </li>
-      <%  if User.find_by(email: session[":useremail"])&.role == "admin"  %>
+      <%  if(User.find_by(email: session[":useremail"])&.check_admin || User.find_by(email: session[":useremail"])&.check_platoon_leader)  %>
         <li class="nav-item">
           <%= link_to 'Manage Users', users_path, class: 'nav-link' %>
         </li>

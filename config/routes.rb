@@ -31,6 +31,13 @@ Rails.application.routes.draw do
 
   post '/another_function', to: 'activities#another_function', as: 'another_function'
 
+  get '/analytics/analytics_logs', to: 'analytics#analytics_logs', as: 'analytics_logs'
+
+  get '/analytics/platoons/:platoon_id', to: 'analytics#platoon_analytics', as: 'platoon_analytics'
+
+  get '/analytics/logs/:platoon_id', to: 'analytics#platoon_logs', as: 'platoon_logs'
+
+
   # Defines the root path route ("/")
   root "home#index"
 end

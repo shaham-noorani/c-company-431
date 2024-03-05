@@ -7,6 +7,3 @@
 # versions of RuboCop, may require this file to be generated again.
   
 # IndentationWidth: 2
-IndentationWidth:
-  Enabled: true
-  Max: 5

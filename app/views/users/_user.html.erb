@@ -11,7 +11,7 @@
 
   <p>
     <strong>Role:</strong>
-    <%= user.role %>
+    <%= user.display_role %>
   </p>
 
   <p>
@@ -24,5 +24,12 @@
     <strong>Platoon:</strong>
     <%= platoon_name %>
   </p> 
-
+  <p>
+    <strong>Class Year:</strong>
+    <%= user.display_year %>
+  </p> 
+  <p>
+    <strong>Military Branch:</strong>
+    <%= user.display_branch %>
+  </p> 
 </div>

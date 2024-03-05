@@ -1,1 +1,124 @@
-<h1>Analytics Page</h1>
+<h1>Analytics for all of C-Company</h1>
+<form action="<%= analytics_path(@platoon) %>" method="get">
+  <label for="startDate">Filter Activities After Date:</label>
+  <input type="date" id="startDate" name="startDate">
+  <button type="submit">Apply Filter</button>
+</form>
+<h2>Activity Types</h2>
+<table style="border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity Type</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Number of Activities</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Amount of Type Assigned</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Percentage Completed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% total_activities = 0 %>
+    <% total_assigned = 0 %>
+    <% total_completed = 0 %>
+    <% @activity_counts_by_type.keys.each do |activity_type_id| %>
+      <% activity_type = ActivityType.find(activity_type_id) %>
+      <% total_activities += @activity_counts_by_type[activity_type_id] || 0 %>
+      <% assigned_count = @memberactivity_counts_by_type[activity_type_id] || 0 %>
+      <% completed_count = @memberactivity_completed_by_type[activity_type_id] || 0 %>
+      <% total_assigned += assigned_count %>
+      <% total_completed += completed_count %>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= activity_type.name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= @activity_counts_by_type[activity_type_id] || 0 %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= assigned_count %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= completed_count %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+          <% percentage_completed = assigned_count > 0 ? (completed_count.to_f / assigned_count * 100).round(2) : 0 %>
+          <%= percentage_completed %>%
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;"><strong>Total</strong></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= total_activities %></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= total_assigned %></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= total_completed %></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">
+        <% percentage_completed = total_assigned > 0 ? (total_completed.to_f / total_assigned * 100).round(2) : 0 %>
+        <%= percentage_completed %>%
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<br>
+<h2>Activities</h2>
+<table style="border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Type</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Count</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Completion Percentage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% total_count = 0 %>
+    <% total_completed_count = 0 %>
+    <% @memberactivity_counts_by_activity.each do |activity_id, count| %>
+      <% activity = Activity.find(activity_id) %>
+      <% activity_type = activity.activity_type %>
+      <% completed_count = @memberactivity_completed[activity_id] || 0 %>
+      <% total_count += count %>
+      <% total_completed_count += completed_count %>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= activity.name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= activity_type.name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= count %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= completed_count %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+          <% if count > 0 %>
+            <%= sprintf("%.2f", (completed_count.to_f / count) * 100) %>%
+          <% else %>
+            0%
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="2" style="border: 1px solid black; padding: 8px; text-align: left;"><strong>Total</strong></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= total_count %></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= total_completed_count %></td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">
+        <% if total_count > 0 %>
+          <%= sprintf("%.2f", (total_completed_count.to_f / total_count) * 100) %>%
+        <% else %>
+          0%
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<br>
+<p>Platoon Specific analytics</p>
+<ul>
+  <% @platoons.each do |platoon| %>
+    <li>
+      <%= link_to platoon.name, platoon_analytics_path(platoon_id: platoon.id) %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "View Logs", '/analytics/analytics_logs' %>
+<ul>
+  <% @platoons.each do |platoon| %>
+    <li>
+      <%= link_to platoon.name, platoon_logs_path(platoon_id: platoon.id) %>
+    </li>
+  <% end %>
+</ul>
+
+
