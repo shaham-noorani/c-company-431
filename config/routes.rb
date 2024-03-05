@@ -12,8 +12,11 @@ Rails.application.routes.draw do
     get 'reassign', on: :member
     post 'assign_to_platoon', on: :member
     post 'assign_to_user', on: :member
+
     post 'assign_member/:activity_id', to: 'activities#assign_member', as: 'assign_member'
+    post 'assign_platoon/:activity_id', to: 'activities#assign_platoon', as: 'assign_platoon'
   end
+
   resources :events
   resources :users
   resources :platoons
@@ -23,6 +26,8 @@ Rails.application.routes.draw do
   get 'analytics', to: 'analytics#index'
 
   get '/activities/assign_member/:activity_id', to: 'activities#assign_member', as: 'assign_member'
+
+  get '/activities/assign_platoon/:activity_id', to: 'activities#assign_platoon', as: 'assign_platoon'
 
   # Defines the root path route ("/")
   root "home#index"

@@ -82,15 +82,38 @@ class ActivitiesController < ApplicationController
       redirect_to @activity, notice: 'Activity was successfully assigned to the member.'
     end
 
-
-
   end
+
+
 
   def assign_member
+    @user_id = params[:user_id]
     @activity = Activity.find(params[:activity_id])
     logger.info("works")
-    # Process form submission
+    logger.info(params[:user_id])
+  
+    # Ensure params[:activity] is present
+    if params[:user_id].present?
+      user = User.find(params[:user_id])
+      
+  
+      member_activity = MemberActivity.new(
+        user_id: user.id,
+        activity_id: @activity.id,
+        date: nil,
+        start_time: nil,
+        end_time: nil
+      )
+  
+      if member_activity.save
+        redirect_to @activity, notice: 'Activity was successfully assigned to the member.'
+      end
+    end
   end
+  
+
+
+  #def assign_platoon
 
 
 
