@@ -1,20 +1,18 @@
 <div id="<%= dom_id member_activity %>">
   <p>
-    <strong>User:</strong>
-    <%= member_activity.user_id %>
+  <strong>User:</strong>
+  <%= member_activity.user.first_name %> <%= member_activity.user.last_name %>
   </p>
 
   <p>
-    <strong>Activity:</strong>
-    <%= member_activity.activity_id %>
+  <strong>Activity:</strong>
+  <%= member_activity.activity&.name %>
   </p>
 
   <p>
     <strong>Date:</strong>
     <%= member_activity.date %>
   </p>
-
-
 
   <p>
     <strong> Start time:</strong>

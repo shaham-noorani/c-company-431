@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @user %>
+<%= render partial: 'user', locals: { user: @user, platoon_name: @platoon_name } %>
 
 <div>
   <%= link_to "Edit this user", edit_user_path(@user) %> |

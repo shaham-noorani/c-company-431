@@ -52,7 +52,7 @@ Install the app
 
 
 Run the app
-`rails server --binding:0.0.0.0`
+`rails s -b 0.0.0.0`
 
 
 The application can be seen using a browser and navigating to http://localhost:3000/

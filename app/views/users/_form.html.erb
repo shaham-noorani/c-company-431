@@ -23,7 +23,7 @@
 
   <div>
     <%= form.label :role, style: "display: block" %>
-    <%= form.text_field :role %>
+    <%= form.select :role, User::ROLE_DISPLAY_NAMES.map { |key, value| [value, key] }, {selected: user.role}, {class: "form-control"} %>
   </div>
 
   <div>
@@ -33,9 +33,16 @@
 
   <div>
     <%= form.label :platoon_id, style: "display: block" %>
-    <%= form.number_field :platoon_id %>
+    <%= form.select :platoon_id, Platoon.all.map { |platoon| [platoon.name, platoon.id] }, {selected: user.platoon_id}, {class: "form-control"} %>
   </div>
-
+  <div>
+    <%= form.label :class_year, style: "display: block" %>
+    <%= form.select :class_year, User::YEAR_DISPLAY_NAMES.map { |key, value| [value, key] }, {selected: user.class_year}, {class: "form-control"} %>
+  </div>
+  <div>
+    <%= form.label :military_branch, style: "display: block" %>
+    <%= form.select :military_branch, User::BRANCH_DISPLAY_NAMES.map { |key, value| [value, key] }, {selected: user.military_branch}, {class: "form-control"} %>
+  </div>
   <div>
     <%= form.submit %>
   </div>

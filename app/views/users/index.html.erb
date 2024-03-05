@@ -1,15 +1,10 @@
 <p style="color: green"><%= notice %></p>
-<p>
-  <strong>my email:</strong>
-  <%= @my_user.email %>
-</p>
 <h1>Users</h1>
 
 <div id="users">
   <% @users.each do |user| %>
-    <%= render user %>
     <p>
-      <%= link_to "Show this user", user %>
+      <%= link_to "#{user.first_name} #{user.last_name} (#{user.email})", user %>
     </p>
   <% end %>
 </div>

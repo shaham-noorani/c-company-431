@@ -1,0 +1,121 @@
+<h1>Analytics Logs for Entire C-Company</h1>
+<form action="<%= analytics_logs_path(@platoon) %>" method="get">
+  <label for="startDate">Filter Activities After Date:</label>
+  <input type="date" id="startDate" name="startDate">
+  <button type="submit">Apply Filter</button>
+</form>
+<h2>All Logs for C-Company</h2>
+
+<table style="border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity Name</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">User Name</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Platoon</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Date</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Start Time</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">End Time</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @member_activities.each do |member_activity| %>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.activity.name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.user.first_name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.user.platoon.name if member_activity.user.platoon %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.date.strftime("%B %d, %Y") if member_activity.date %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.start_time.strftime("%I:%M %p") if member_activity.start_time %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.end_time.strftime("%I:%M %p") if member_activity.end_time %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.completed ? 'Yes' : 'No' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<h2>All Completed Activities</h2>
+<table style="border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity Name</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">User Name</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Platoon</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Date</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Start Time</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">End Time</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @completed_member_activities.each do |member_activity| %>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.activity.name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.user.first_name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.user.platoon.name if member_activity.user.platoon %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.date.strftime("%B %d, %Y") if member_activity.date %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.start_time.strftime("%I:%M %p") if member_activity.start_time %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.end_time.strftime("%I:%M %p") if member_activity.end_time %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.completed ? 'Yes' : 'No' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<h2>All Incomplete Activities</h2>
+<table style="border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity Name</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">User Name</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Platoon</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Date</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Start Time</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">End Time</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @not_completed_member_activities.each do |member_activity| %>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.activity.name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.user.first_name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.user.platoon.name if member_activity.user.platoon %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.date.strftime("%B %d, %Y") if member_activity.date %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.start_time.strftime("%I:%M %p") if member_activity.start_time %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.end_time.strftime("%I:%M %p") if member_activity.end_time %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= member_activity.completed ? 'Yes' : 'No' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to "Back to analytics", analytics_path %>

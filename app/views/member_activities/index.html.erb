@@ -6,8 +6,8 @@
   <% @member_activities.each do |member_activity| %>
     <!-- Add a class to indicate completion status -->
     <div class="member_activity <%= 'completed' if member_activity.completed %>" style="<%= 'display: none;' if member_activity.completed %>">
-      <p><strong>Activity:</strong> <%= member_activity.activity.name %></p>
-      <p><strong>Description:</strong> <%= member_activity.activity.description %></p>
+      <p><strong>Activity:</strong> <%= member_activity.activity&.name %></p>
+      <p><strong>Description:</strong> <%= member_activity.activity&.description %></p>
       <p><strong>Status:</strong> <%= member_activity.completed ? 'Completed' : 'Pending' %></p>
 
       <% unless member_activity.completed %>
@@ -22,12 +22,11 @@
 </div>
 <div>
   <!-- Button to toggle completed activities -->
-  <button id="toggleCompletedActivities" class="btn btn-info">Show Completed Activities</button>
+  <button id="toggleCompletedActivities" class="btn btn-info" type="button">Show Completed Activities</button>
 </div>
 <%= link_to "New Member Activity", new_member_activity_path, class: 'btn btn-primary' %>
 
 <script>
-  // JavaScript to toggle completed activities
   document.addEventListener("DOMContentLoaded", function() {
     const toggleButton = document.getElementById("toggleCompletedActivities");
     toggleButton.addEventListener("click", function() {

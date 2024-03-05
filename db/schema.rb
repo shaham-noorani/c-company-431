@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_13_032041) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_03_004459) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_032041) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "activity_type_name"
+    t.integer "activity_type_id"
   end
 
   create_table "activity_types", force: :cascade do |t|

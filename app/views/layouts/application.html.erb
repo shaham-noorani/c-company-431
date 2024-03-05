@@ -55,24 +55,36 @@
       <li class="nav-item">
         <%= link_to 'Activities', activities_path, class: 'nav-link' %>
       </li>
-      <%
-=begin%>
- <li class="nav-item">
-        <%= link_to 'Events', events_path, class: 'nav-link' %>
-      </li> 
-<%
-=end%>
       <li class="nav-item">
-        <%= link_to 'Member Activities', member_activities_path, class: 'nav-link' %>
+        <%= link_to 'My Activities', member_activities_path, class: 'nav-link' %>
       </li>
       <li class="nav-item">
         <%= link_to 'Activity types', activity_types_path, class: 'nav-link' %>
       </li>
+      <%  if(User.find_by(email: session[":useremail"])&.check_admin || User.find_by(email: session[":useremail"])&.check_platoon_leader)  %>
+        <li class="nav-item">
+          <%= link_to 'Manage Users', users_path, class: 'nav-link' %>
+        </li>
+      <% end %>
+      <li class="nav-item">
+        <%= link_to 'Login', new_session_path, class: 'nav-link' %>
+      <%  if(User.find_by(email: session[":useremail"])&.check_admin) %>
+        <li class="nav-item">
+          <%= link_to 'Analytics', analytics_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'My Platoon', my_platoon_path, class: 'nav-link' %>
+        </li>
+      <% end %>
       <!-- Add more navigation links as needed -->
     </ul>
   </div>
 </nav>
-
+<% if flash[:alert] %>
+  <div class="alert alert-warning">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
 <div class="container">
   <%= yield %>
 </div>
