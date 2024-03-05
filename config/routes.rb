@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
 
   get 'analytics', to: 'analytics#index'
+  get 'my_platoon', to: 'platoons#my_platoon'
 
   get '/activities/assign_member/:activity_id', to: 'activities#assign_member', as: 'assign_member'
 
