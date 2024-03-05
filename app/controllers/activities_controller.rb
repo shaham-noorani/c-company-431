@@ -67,9 +67,7 @@ class ActivitiesController < ApplicationController
   # POST /activities/1/assign_to_user
   def assign_to_member
 
-    @activity = Activity.find(params[:id])
-    user = User.find(params[:activity][:user_id])
-    logger.info(user_id)
+
 
     member_activity = MemberActivity.new(
       user_id: user.id,
@@ -85,12 +83,23 @@ class ActivitiesController < ApplicationController
   end
 
 
+  def another_function
+    user_id = params[:user_id]
+    logger.info(user_id)
+    logger.info(params[:activity_id])
+    logger.info("!!!!!!!!!!!!!!!!!!!")
+  end
+
+
+
+
+
 
   def assign_member
     @user_id = params[:user_id]
+    @users = User.all
     @activity = Activity.find(params[:activity_id])
-    #logger.info("works")
-    logger.info("assign member function acessed")
+    logger.info("works!!!!!!!!!!!!!!!!!!!!!")
     logger.info(params[:user_id])
   
     # Ensure params[:activity] is present
