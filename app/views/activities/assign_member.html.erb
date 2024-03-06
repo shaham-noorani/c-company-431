@@ -1,7 +1,4 @@
-<h1>HELLO</h1>
-
-<h1>Member Assignment for <%= @user_id %></h1>
-
+<h2>Select User to Assign</h2>
 <%= form_with(url: another_function_path, method: :post) do |form| %>
     <!-- Hidden field for activity_id -->
     <%= form.hidden_field :activity_id, value: @activity.id %>

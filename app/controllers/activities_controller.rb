@@ -90,6 +90,17 @@ class ActivitiesController < ApplicationController
           redirect_to(@activity, notice: 'Activity was successfully assigned to the member.') if member_activity.save
      end
 
+     def another_function2
+      platoon_id = params[:platoon_id]
+      logger.info(platoon_id)
+      logger.info(params[:activity_id])
+      logger.info('!!!!!!!!!!!!!!!!!!!')
+
+      @activity = Activity.find(params[:activity_id])
+
+     
+ end
+
      def assign_member
           @user_id = params[:user_id]
           @users = User.all
