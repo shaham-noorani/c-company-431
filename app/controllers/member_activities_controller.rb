@@ -73,7 +73,7 @@ class MemberActivitiesController < ApplicationController
      # end
 
      def mark_complete
-          if @member_activity.update(completed: true, end_time: Time.current)
+          if @member_activity.update(completed: true, start_time:Time.now - 60, end_time: Time.now)
                redirect_to(member_activities_path, notice: 'Activity was successfully marked as completed.')
           else
                redirect_to(member_activities_path, alert: 'Unable to mark activity as completed.')

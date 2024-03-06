@@ -82,7 +82,7 @@ class ActivitiesController < ApplicationController
           member_activity = MemberActivity.new(
                user_id: user_id,
                activity_id: @activity.id,
-               date: nil,
+               date: Date.today,
                start_time: nil,
                end_time: nil
           )
