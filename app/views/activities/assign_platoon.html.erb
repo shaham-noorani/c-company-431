@@ -1,14 +1,17 @@
-<h2>Platoon Assignment</h2>
+<h3>Select a Platoon</h3>
 
-
-  <%= form_with(url: another_function2_path, method: :post) do |form| %>
-    <!-- Hidden field for activity_id -->
+<%= form_with(url: platoon_assignment_path, method: :post) do |form| %>
+    <!-- Hidden field for activity_id: will be sent along with params upon form submission-->
     <%= form.hidden_field :activity_id, value: @activity.id %>
-  
-    <div id="platoon_dropdown" style="display: block;">
-      <%= form.label :platoon_id, 'Select Platoon:', style: "display: block" %>
-      <%= form.select :platoon_id, options_for_select(Platoon.all.map { |platoon| [platoon.name, platoon.id] }), prompt: 'Select a Platoon' %>
+
+    <div class="field">
+      <%= form.label :platoon_id, 'Select Platoon:' %>
+      <%= form.select :platoon_id, options_for_select(@platoon.map { |platoon| [platoon.name, platoon.id] }) %>
     </div>
-  
-    <%= form.submit "Submit" %>
+
+    <%= form.submit "Assign" %>
   <% end %>
+
+    
+
+  
