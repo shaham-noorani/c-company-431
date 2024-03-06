@@ -26,12 +26,14 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
 
   get 'analytics', to: 'analytics#index'
+  get 'my_platoon', to: 'platoons#my_platoon'
 
   get '/activities/assign_member/:activity_id', to: 'activities#assign_member', as: 'assign_member'
 
   get '/activities/assign_platoon/:activity_id', to: 'activities#assign_platoon', as: 'assign_platoon'
 
   post '/another_function', to: 'activities#another_function', as: 'another_function'
+  post '/another_function2', to: 'activities#another_function2', as: 'another_function2'
 
   post '/platoon_assignment', to: 'activities#platoon_assignment', as: 'platoon_assignment'
 
