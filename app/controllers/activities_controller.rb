@@ -36,131 +36,135 @@ class ActivitiesController < ApplicationController
   end
 
 
-  def reassign
-    @activity = Activity.find(params[:id])
-    @platoons = Platoon.all
-    @user = User.all
 
+  # prepares variables for the page when it is rendered
+  def assign_member
+    # queries User table for all entries so the dropdown can be populated 
+    @users = User.all
+    @activity = Activity.find(params[:activity_id])
+
+    logger.info("works!!!!!!!!!!!!!!!!!!!!!")
+    logger.info("here")
+    logger.info("YOOOOOOOOOOOOOO")
+    # prints nothing since no user_id is selected right when the page is rendered
+    logger.info(params[:user_id])
+  
   end
 
 
-  # POST /activities/1/assign_to_platoon
-  def assign_to_platoon
-    platoon = Platoon.find(params[:activity][:platoon_id])
-    users_in_platoon = platoon.users
+
+  # params generated in form(assign_member.html.erb) are passed to this function
+  def another_function
+
+    # printing params
+    logger.info("params hash below")
+    logger.info(params.inspect)
+
+    # get user id from params
+    user_id = params[:user_id]
+
+    # logger.info(user_id)
+    # logger.info(params[:activity_id])
+    # logger.info("!!!!!!!!!!!!!!!!!!!")
+    
+    # get activity id
+    @activity = Activity.find(params[:activity_id])
+  
+    # ensure user_id is present
+    if user_id.present?
+      user = User.find(user_id)
       
-    users_in_platoon.each do |user|
-      member_activites = MemberActivity.new(
+      # prepares data for correlating row in MemberActivity
+      member_activity = MemberActivity.new(
         user_id: user.id,
         activity_id: @activity.id,
         date: nil,
         start_time: nil,
         end_time: nil
       )
-
-      if member_activity.save
-        redirect_to @activity, notice: 'Activity was successfully assigned to the platoon.'
-      end
-    end
-  end
-
-
-
-  # POST /activities/1/assign_to_user
-  def assign_to_member
-
-
-
-    member_activity = MemberActivity.new(
-      user_id: user.id,
-      activity_id: @activity.id,
-      date: nil,
-      start_time: nil,
-      end_time: nil
-    )
-    if member_activity.save
-      redirect_to @activity, notice: 'Activity was successfully assigned to the member.'
-    end
-
-  end
-
-
-  def another_function
-    user_id = params[:user_id]
-    logger.info(user_id)
-    logger.info(params[:activity_id])
-    logger.info("!!!!!!!!!!!!!!!!!!!")
-
-    @activity = Activity.find(params[:activity_id])
-
-    member_activity = MemberActivity.new(
-      user_id: user.id,
-      activity_id: @activity.id,
-      datetime.now: nil,
-      start_time: nil,
-      end_time: nil
-    )
-
-    if member_activity.save
-      redirect_to @activity, notice: 'Activity was successfully assigned to the member.'
-    end
-  end
-
-
-
-  def assign_member
-    @user_id = params[:user_id]
-    @users = User.all
-    @activity = Activity.find(params[:activity_id])
-    logger.info("works!!!!!!!!!!!!!!!!!!!!!")
-    logger.info(params[:user_id])
-  
-    # Ensure params[:activity] is present
-    if params[:user_id].present?
-      user = User.find(params[:user_id])
       
-      member_activity = MemberActivity.new(
-        user_id: user.id,
-        activity_id: @activity.id,
-        date.now: nil,
-        start_time: nil,
-        end_time: nil
-      )
-  
+      # saves the row to the MemberActivity table
       if member_activity.save
         redirect_to @activity, notice: 'Activity was successfully assigned to the member.'
+      else
+        flash[:error] = 'Failed to assign activity to the member'
+        redirect_to @activity
       end
+      
+    # this else statement may not be needed
+    else
+      # Handle case where user_id is not present
+      flash[:error] = 'User ID is required'
+      redirect_to @activity
     end
   end
   
 
 
+  # prepares variables for the assigning to platoon page when it is rendered
   def assign_platoon
-
+    # queries User table for all entries so the dropdown can be populated 
+    @platoon = Platoon.all
     @activity = Activity.find(params[:activity_id])
-    logger.info("platoon assign function accessed")
-    logger.info(params[:platoon_id])
 
-    if params[:platoon_id].present?
-      platoon = Platoon.find(params[:platoon_id])
-      users_in_platoon = platoon.users
-        
-      users_in_platoon.each do |user|
-        member_activites = MemberActivity.new(
+    logger.info("works!!!!!!!!!!!!!!!!!!!!!")
+    logger.info("here")
+    logger.info("YOOOOOOOOOOOOOO")
+    # prints nothing since no user_id is selected right when the page is rendered
+    logger.info(params[:platoon_id])
+  
+  end
+
+
+  # params generated in form(assign_member.html.erb) are passed to this function
+  def platoon_assignment
+    logger.info("params hash below")
+    logger.info(params.inspect)
+  
+    platoon_id = params[:platoon_id]
+    logger.info(platoon_id)
+    logger.info(params[:activity_id])
+    logger.info("!!!!!!!!!!!!!!!!!!!")
+  
+    @activity = Activity.find(params[:activity_id])
+  
+    # Ensure platoon_id is present
+    if platoon_id.present?
+      platoon = Platoon.find(platoon_id)
+      errors = []
+  
+      platoon.users.each do |user|
+        member_activity = MemberActivity.new(
           user_id: user.id,
           activity_id: @activity.id,
           date: nil,
           start_time: nil,
           end_time: nil
         )
-
-        if member_activity.save
-          redirect_to @activity, notice: 'Activity was successfully assigned to the platoon.'
+  
+        unless member_activity.save
+          errors << "Failed to assign activity to user"
         end
       end
+  
+      if errors.empty?
+        redirect_to @activity, notice: 'Activity was successfully assigned to all members in the platoon.'
+      else
+        flash[:error] = errors.join('. ')
+        redirect_to @activity
+      end
+
+    else
+      # Handle case where platoon_id is not present
+      flash[:error] = 'Platoon ID is required'
+      redirect_to @activity
     end
 
-  end 
+  end
+  
+
+
+  
 
 
 
@@ -250,7 +254,12 @@ class ActivitiesController < ApplicationController
      end
 
      # Only allow a list of trusted parameters through.
-     def activity_params
-          params.require(:activity).permit(:name, :description, :activity_type_id)
-     end
+    #  def activity_params
+    #       params.require(:activity).permit(:name, :description, :activity_type_id, :activity_id, :user_id)
+    #  end
+
+    def activity_params
+      params.require(:activity).permit(:name, :description, :activity_type_id)
+    end
+
 end
