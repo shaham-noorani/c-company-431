@@ -1,9 +1,8 @@
-<h1>HELLO</h1>
+<h3>Select A User</h3>
 
-<h1>Member Assignment for <%= @user_id %></h1>
 
 <%= form_with(url: another_function_path, method: :post) do |form| %>
-    <!-- Hidden field for activity_id -->
+    <!-- Hidden field for activity_id: will be sent along with params upon form submission-->
     <%= form.hidden_field :activity_id, value: @activity.id %>
   
     <div class="field">
@@ -11,7 +10,7 @@
       <%= form.select :user_id, options_for_select(@users.map { |user| [user.email, user.id] }) %>
     </div>
   
-    <%= form.submit "Submit" %>
+    <%= form.submit "Assign" %>
   <% end %>
   
   

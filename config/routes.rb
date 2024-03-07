@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     post 'assign_to_platoon', on: :member
     post 'assign_to_user', on: :member
     post '/another_function', to: 'cont#another_function', as: 'another_function'
+    post '/platoon_assignment', to: 'cont#platoon_assignment', as: 'platoon_assignment'
+
     post 'assign_member/:activity_id', to: 'activities#assign_member', as: 'assign_member'
     post 'assign_platoon/:activity_id', to: 'activities#assign_platoon', as: 'assign_platoon'
   end
@@ -31,6 +33,9 @@ Rails.application.routes.draw do
   get '/activities/assign_platoon/:activity_id', to: 'activities#assign_platoon', as: 'assign_platoon'
 
   post '/another_function', to: 'activities#another_function', as: 'another_function'
+  post '/another_function2', to: 'activities#another_function2', as: 'another_function2'
+
+  post '/platoon_assignment', to: 'activities#platoon_assignment', as: 'platoon_assignment'
 
   get '/analytics/analytics_logs', to: 'analytics#analytics_logs', as: 'analytics_logs'
 
