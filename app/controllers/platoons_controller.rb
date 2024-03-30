@@ -21,10 +21,11 @@ class PlatoonsController < ApplicationController
 
      # POST /platoons or /platoons.json
      def create
-          @platoon = Platoon.new(platoon_params)
-
+          @platoon = Platoon.new(platoon_params) 
+          
           respond_to do |format|
                if @platoon.save
+                    User.find_by(id: @platoon.leader_id).update(platoon_id: @platoon.id)
                     format.html { redirect_to(platoon_url(@platoon), notice: 'Platoon was successfully created.') }
                     format.json { render(:show, status: :created, location: @platoon) }
                else
