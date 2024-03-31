@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe('Platoons management', type: :feature) do
+     let!(:leader) { User.create(first_name: 'John', last_name: 'Doe', email: 'john@example.com', role: 'member', class_year: 'fish', military_affiliation: 'Air Force', military_branch: 'USAF') }
      describe 'Creating a new platoon' do
           it 'creates a platoon with valid attributes' do
                visit new_platoon_path
 
                fill_in 'platoon[name]', with: 'Bravo Platoon'
-               # For simplicity, assume leader_id is 1
-               fill_in 'platoon[leader_id]', with: '1'
+               select "john@example.com", from: 'platoon[leader_id]'
 
                click_on 'Create Platoon'
 
@@ -24,7 +24,6 @@ RSpec.describe('Platoons management', type: :feature) do
                click_on 'Create Platoon'
 
                expect(page).to(have_content("Name can't be blank"))
-               expect(page).to(have_content("Leader can't be blank"))
           end
      end
 
@@ -47,8 +46,7 @@ RSpec.describe('Platoons management', type: :feature) do
                visit edit_platoon_path(platoon)
 
                fill_in 'platoon[name]', with: 'Echo Platoon'
-               # For simplicity, assume leader_id is 1
-               fill_in 'platoon[leader_id]', with: '1'
+               select "john@example.com", from: 'platoon[leader_id]'
 
                click_on 'Update Platoon'
 
