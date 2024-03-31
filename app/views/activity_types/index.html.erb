@@ -1,14 +1,53 @@
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2; /* optional: add a background color to header cells */
+  }
+
+  /* Adjust the width of the description column */
+  td.description {
+    max-width: 300px; /* or any desired width */
+    overflow: hidden;
+    text-overflow: ellipsis; /* truncates text with an ellipsis if it overflows */
+    white-space: nowrap; /* prevents wrapping */
+  }
+</style>
+
 <p style="color: green"><%= notice %></p>
 
 <h1>Activity types</h1>
 
-<div id="activity_types">
-  <% @activity_types.each do |activity_type| %>
-    <%= render activity_type %>
-    <p>
-      <%= link_to "Show this activity type", activity_type %>
-    </p>
-  <% end %>
-</div>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @activity_types.each do |activity_type| %>
+      <tr>
+        <td><%= activity_type.name %></td>
+        <td class="description"><%= activity_type.description %></td>
+        <td>
+          <%= link_to "Show", activity_type %>
+          <%= link_to "Edit", edit_activity_type_path(activity_type) %>
+          <%= link_to "Delete", activity_type, method: :delete, data: { confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to "New activity type", new_activity_type_path %>
