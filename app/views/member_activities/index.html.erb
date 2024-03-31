@@ -1,17 +1,42 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <p style="color: green"><%= notice %></p>
 
 <h1>Member Activities</h1>
 
 <div id="member_activities">
   <% @member_activities.each do |member_activity| %>
-    <!-- Add a class to indicate completion status -->
     <div class="member_activity <%= 'completed' if member_activity.completed %>" style="<%= 'display: none;' if member_activity.completed %>">
       <p><strong>Activity:</strong> <%= member_activity.activity&.name %></p>
       <p><strong>Description:</strong> <%= member_activity.activity&.description %></p>
       <p><strong>Status:</strong> <%= member_activity.completed ? 'Completed' : 'Pending' %></p>
 
       <% unless member_activity.completed %>
-        <%= link_to 'Mark as Completed', mark_complete_member_activity_path(member_activity), method: :patch, data: { confirm: 'Are you sure you want to mark this activity as completed?' }, class: 'btn btn-success' %>
+        <!-- Form to mark activity as completed with end time -->
+        <%= form_with(url: mark_as_complete_member_activity_path(member_activity), method: :patch) do |form| %>
+          <div class="form-group">
+            <%= form.label :end_time, 'End Time:' %>
+            <%= form.time_field :end_time, required: true, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= form.submit 'Mark as Completed', data: { confirm: 'Are you sure you want to mark this activity as completed?' }, class: 'btn btn-success' %>
+          </div>
+        <% end %>
       <% end %>
 
       <p>
@@ -20,10 +45,11 @@
     </div>
   <% end %>
 </div>
+
 <div>
-  <!-- Button to toggle completed activities -->
   <button id="toggleCompletedActivities" class="btn btn-info" type="button">Show Completed Activities</button>
 </div>
+
 <%= link_to "New Member Activity", new_member_activity_path, class: 'btn btn-primary' %>
 
 <script>
@@ -43,6 +69,5 @@
     });
   });
 </script>
-
 
 

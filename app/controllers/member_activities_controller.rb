@@ -72,15 +72,33 @@ class MemberActivitiesController < ApplicationController
      #   end
      # end
 
-     def mark_complete
-          if @member_activity.update(completed: true, start_time: Time.now - 60, end_time: Time.now)
-               redirect_to(member_activities_path, notice: 'Activity was successfully marked as completed.')
-          else
-               redirect_to(member_activities_path, alert: 'Unable to mark activity as completed.')
-          end
-     end
+     # def mark_complete
+     #      if @member_activity.update(completed: true, start_time: Time.now - 60, end_time: Time.now)
+     #           redirect_to(member_activities_path, notice: 'Activity was successfully marked as completed.')
+     #      else
+     #           redirect_to(member_activities_path, alert: 'Unable to mark activity as completed.')
+     #      end
+     # end
 
-     private
+
+     def mark_as_complete
+          @member_activity = MemberActivity.find(params[:id])
+        
+          if @member_activity.update(completed: true, end_time: params[:end_time])
+            flash[:notice] = "Activity marked as completed successfully."
+          else
+            flash[:alert] = "There was an issue marking the activity as completed."
+          end
+        
+          redirect_to member_activities_path 
+     end
+        
+     # def mark_complete
+     #      @member_activity = MemberActivity.find(params[:id])
+     #      # Logic to update the member activity's status and end time
+     # end
+     
+     # private
 
      # Use callbacks to share common setup or constraints between actions.
      def set_member_activity
