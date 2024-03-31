@@ -1,4 +1,4 @@
-<h3>Select A User</h3>
+<h3>Select A User and Deadline</h3>
 
 
 <%= form_with(url: another_function_path, method: :post) do |form| %>
@@ -9,6 +9,15 @@
       <%= form.label :user_id, 'Select User:' %>
       <%= form.select :user_id, options_for_select(@users.map { |user| [user.email, user.id] }) %>
     </div>
+
+    <br>
+
+    <div class="field">
+      <%= form.label :deadline, 'Deadline:' %>
+      <%= form.datetime_field :deadline %>
+    </div>
+
+    <br>
   
     <%= form.submit "Assign" %>
   <% end %>
