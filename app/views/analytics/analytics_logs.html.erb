@@ -1,9 +1,28 @@
 <h1>Analytics Logs for Entire C-Company</h1>
-<form action="<%= analytics_logs_path(@platoon) %>" method="get">
+<% flash.each do |type, message| %>
+  <div class="alert alert-<%= type %>">
+    <%= message %>
+  </div>
+<% end %>
+
+<h1>Analytics for all of C-Company</h1>
+<%= form_with(url: analytics_logs_path(@platoon), method: "get") do %>
+  <!-- Filter Activities After Date -->
   <label for="startDate">Filter Activities After Date:</label>
   <input type="date" id="startDate" name="startDate">
-  <button type="submit">Apply Filter</button>
-</form>
+
+  <!-- Select User -->
+  <label for="user_input">Select User:</label>
+  <%= text_field_tag :user_id, nil, list: "user_info", style: "width: 300px;" %>
+  <datalist id="user_info">
+    <% User.all.each do |user| %>
+      <option value="<%= "#{user.last_name}, #{user.first_name}: #{user.email}" %>" data-user-id="<%= user.id %>"><%= "#{user.last_name}, #{user.first_name}: #{user.email}" %></option>
+    <% end %>
+  </datalist>
+
+  <!-- Submit Button -->
+  <%= submit_tag "Submit" %>
+<% end %>
 <h2>All Logs for C-Company</h2>
 
 <table style="border: 1px solid black;">
