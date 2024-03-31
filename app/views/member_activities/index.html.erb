@@ -57,17 +57,22 @@
     const toggleButton = document.getElementById("toggleCompletedActivities");
     toggleButton.addEventListener("click", function() {
       const completedActivities = document.querySelectorAll(".member_activity.completed");
+      const pendingActivities = document.querySelectorAll(".member_activity:not(.completed)");
+      const isShowingCompleted = toggleButton.textContent.includes("Pending");
+
       completedActivities.forEach(function(activity) {
-        if (activity.style.display === "none") {
-          activity.style.display = "";
-          toggleButton.textContent = "Hide Completed Activities";
-        } else {
-          activity.style.display = "none";
-          toggleButton.textContent = "Show Completed Activities";
-        }
+        activity.style.display = isShowingCompleted ? "none" : "block"; 
       });
+
+      pendingActivities.forEach(function(activity) {
+        activity.style.display = isShowingCompleted ? "block" : "none";  
+      });
+
+      toggleButton.textContent = isShowingCompleted ? "Show Completed Activities" : "Show Pending Activities";
     });
   });
 </script>
+
+
 
 

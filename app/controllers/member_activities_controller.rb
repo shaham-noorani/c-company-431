@@ -48,8 +48,8 @@ class MemberActivitiesController < ApplicationController
                     format.html { redirect_to(member_activity_url(@member_activity), notice: 'Member activity was successfully updated.') }
                     format.json { render(:show, status: :ok, location: @member_activity) }
                else
-                    format.html { render(:edit, status: :unprocessable_entity) }
-                    format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
+                    # format.html { render(:edit, status: :unprocessable_entity) }
+                    # format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
                end
           end
      end

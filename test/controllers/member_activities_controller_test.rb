@@ -61,4 +61,81 @@ class MemberActivitiesControllerTest < ActionDispatch::IntegrationTest
 
           assert_redirected_to member_activities_url
      end
+
+     test 'should mark activity as complete' do
+          patch mark_as_complete_member_activity_url(@member_activity), params: { end_time: '15:00' }
+          assert_redirected_to member_activities_url
+          @member_activity.reload
+          assert @member_activity.completed
+          assert_equal '15:00', @member_activity.end_time.strftime('%H:%M')
+     end
+      
+     test 'should not mark activity as complete with invalid parameters' do
+          # Assuming there's some validation on end_time that makes it invalid, adjust as necessary
+          patch mark_as_complete_member_activity_url(@member_activity), params: { end_time: nil }
+          assert_redirected_to member_activities_url
+          @member_activity.reload
+          assert_not @member_activity.completed
+     end
+
+     test 'mark_as_complete sets end_time and completes the activity' do
+          end_time = Time.current.change(sec: 0) # Assuming end_time is a datetime
+          patch mark_as_complete_member_activity_url(@member_activity), params: { end_time: end_time }
+        
+          assert_redirected_to member_activities_url
+          @member_activity.reload
+          assert @member_activity.completed
+          assert_equal end_time, @member_activity.end_time
+     end
+        
+     test 'mark_as_complete without end_time does not complete the activity' do
+          patch mark_as_complete_member_activity_url(@member_activity)
+        
+          assert_redirected_to member_activities_url
+          @member_activity.reload
+          assert_not @member_activity.completed
+     end
+
+     test 'should not create member_activity with invalid parameters' do
+          assert_no_difference('MemberActivity.count') do
+               post member_activities_url, params: { member_activity: { activity_id: nil, user_id: nil } }
+          end
+        
+          assert_response :unprocessable_entity
+     end
+
+     test 'should not update member_activity with invalid parameters' do
+          patch member_activity_url(@member_activity), params: { member_activity: { activity_id: nil, user_id: nil } }
+        
+          assert_response :unprocessable_entity
+          @member_activity.reload
+          # Assert that important attributes haven't changed, assuming they were set initially
+          assert_not_nil @member_activity.activity_id
+          assert_not_nil @member_activity.user_id
+     end
+
+     test 'should not create member_activity with invalid parameters in JSON format' do
+          assert_no_difference('MemberActivity.count') do
+               post member_activities_url, params: { member_activity: { activity_id: nil, user_id: nil } }.to_json, headers: { 'Accept' => 'application/json', 'Content-Type' => 'application/json' }
+          end
+        
+          assert_response :unprocessable_entity
+     end
+
+     test 'should not create member_activity with invalid parameters' do
+          assert_no_difference('MemberActivity.count') do
+               post member_activities_url, params: { member_activity: { activity_id: nil, user_id: nil } }
+          end
+        
+          assert_template :new
+          assert_response :unprocessable_entity
+     end
+        
+     test 'should not update member_activity with invalid parameters' do
+          patch member_activity_url(@member_activity), params: { member_activity: { activity_id: nil, user_id: nil } }
+        
+          assert_template :edit
+          assert_response :unprocessable_entity
+     end
+      
 end
