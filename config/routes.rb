@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :member_activities do
     member do
-      get :mark_complete
+      patch :mark_as_complete
     end
   end
   resources :sessions, only: [:new, :create, :destroy]
