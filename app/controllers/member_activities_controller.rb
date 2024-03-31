@@ -57,10 +57,7 @@ class MemberActivitiesController < ApplicationController
      # DELETE /member_activities/1 or /member_activities/1.json
      def destroy
           @member_activity.destroy!
-          respond_to do |format|
-               format.html { redirect_to(member_activities_url, notice: 'Member activity was successfully destroyed.') }
-               format.json { head(:no_content) }
-          end
+          redirect_to analytics_logs_path(@platoon), notice: 'Member activity was successfully destroyed.'
      end
 
      # Custom action to mark an activity as completed
