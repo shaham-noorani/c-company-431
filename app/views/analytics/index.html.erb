@@ -25,14 +25,14 @@
 
 
 <h2>Activity Types</h2>
-<table style="border: 1px solid black;">
+<table style="border: 1px solid black; margin: 0 auto; width: 80%;">
   <thead>
     <tr>
-      <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity Type</th>
-      <th style="border: 1px solid black; padding: 8px; text-align: left;">Number of Activities</th>
-      <th style="border: 1px solid black; padding: 8px; text-align: left;">Amount of Type Assigned</th>
-      <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
-      <th style="border: 1px solid black; padding: 8px; text-align: left;">Percentage Completed</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Activity Type</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Number of Activities</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Amount of Type Assigned</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Completed</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Percentage Completed</th>
     </tr>
   </thead>
   <tbody>
@@ -73,7 +73,7 @@
 
 <br>
 <h2>Activities</h2>
-<table style="border: 1px solid black;">
+<table style="border: 1px solid black; margin: 0 auto; width: 80%;">
   <thead>
     <tr>
       <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity</th>
@@ -123,22 +123,27 @@
 
 
 <br>
-<p>Platoon Specific analytics</p>
-<ul>
-  <% @platoons.each do |platoon| %>
-    <li>
-      <%= link_to platoon.name, platoon_analytics_path(platoon_id: platoon.id) %>
-    </li>
-  <% end %>
-</ul>
+<%= link_to "View Logs", '/analytics/analytics_logs', style: "display: block; margin-top: 20px; padding: 10px 20px; background-color: maroon; color: #fff; text-decoration: none; border-radius: 5px; text-align: center;" %>
+<div style="margin-bottom: 20px;">
+  <h2 style="font-size: 1.5em; margin-bottom: 10px;">Platoon Specific Analytics</h2>
+  <ul style="list-style-type: none; padding: 0;">
+    <% @platoons.each do |platoon| %>
+      <li style="margin-bottom: 5px;">
+        <%= link_to platoon.name, platoon_analytics_path(platoon_id: platoon.id) %>
+      </li>
+    <% end %>
+  </ul>
 
-<%= link_to "View Logs", '/analytics/analytics_logs' %>
-<ul>
-  <% @platoons.each do |platoon| %>
-    <li>
-      <%= link_to platoon.name, platoon_logs_path(platoon_id: platoon.id) %>
-    </li>
-  <% end %>
-</ul>
+
+  <h2 style="font-size: 1.5em; margin-top: 20px; margin-bottom: 10px;">Platoon Logs</h2>
+  <ul style="list-style-type: none; padding: 0;">
+    <% @platoons.each do |platoon| %>
+      <li style="margin-bottom: 5px;">
+        <%= link_to platoon.name, platoon_logs_path(platoon_id: platoon.id) %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
 
 
