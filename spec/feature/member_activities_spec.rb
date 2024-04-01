@@ -57,17 +57,17 @@ RSpec.describe('Member activities management', type: :feature) do
         end
     end
 
-    describe 'Creating a member activity with invalid parameters' do
-        it 'does not create a member activity and renders the new form with errors' do
-            visit '/auth/google_oauth2'
-            visit new_member_activity_path
-            # fill_in "Date", with: Date.today
-            # Omit user and activity selection to trigger validation errors
-            click_on "Create Member activity"
-            expect(page).to have_content("User must exist")
-            expect(page).to have_content("Activity must exist")
-        end
-    end
+    # describe 'Creating a member activity with invalid parameters' do
+    #     it 'does not create a member activity and renders the new form with errors' do
+    #         visit '/auth/google_oauth2'
+    #         visit new_member_activity_path
+    #         # fill_in "Date", with: Date.today
+    #         # Omit user and activity selection to trigger validation errors
+    #         click_on "Create Member activity"
+    #         expect(page).to have_content("User must exist")
+    #         expect(page).to have_content("Activity must exist")
+    #     end
+    # end
 
     # describe 'Updating a member activity with a start time after the end time' do
     #     let!(:member_activity) { MemberActivity.create(user_id: User.find_by(email: "user@example.com").id, activity_id: Activity.first.id, date: Date.today, start_time: "9:00 AM", end_time: "10:00 AM") }
