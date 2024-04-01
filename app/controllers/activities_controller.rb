@@ -64,17 +64,22 @@ class ActivitiesController < ApplicationController
           # get activity id
           @activity = Activity.find(params[:activity_id])
 
+          # get deadline from params
+          deadline = params[:deadline]
+
           # ensure user_id is present
-          if user_id.present?
+          if user_id.present? && deadline.present?
+
                user = User.find(user_id)
 
                # prepares data for correlating row in MemberActivity
                member_activity = MemberActivity.new(
                     user_id: user.id,
                     activity_id: @activity.id,
-                    date: Date.today,
+                    date: Time.zone.today,
                     start_time: nil,
-                    end_time: nil
+                    end_time: nil,
+                    deadline: deadline
                )
 
                # saves the row to the MemberActivity table
@@ -87,8 +92,8 @@ class ActivitiesController < ApplicationController
 
           # this else statement may not be needed
           else
-               # Handle case where user_id is not present
-               flash[:error] = 'User ID is required'
+               # Handle case where user_id or deadline are not present
+               flash[:error] = 'User ID and deadline are required'
                redirect_to(@activity)
           end
      end
@@ -112,6 +117,7 @@ class ActivitiesController < ApplicationController
           logger.info(params.inspect)
 
           platoon_id = params[:platoon_id]
+
           logger.info(platoon_id)
           logger.info(params[:activity_id])
           logger.info('!!!!!!!!!!!!!!!!!!!')
@@ -123,13 +129,16 @@ class ActivitiesController < ApplicationController
                platoon = Platoon.find(platoon_id)
                errors = []
 
+               deadline = params[:deadline]
+
                platoon.users.each do |user|
                     member_activity = MemberActivity.new(
                          user_id: user.id,
                          activity_id: @activity.id,
-                         date: Date.today,
+                         date: Time.zone.today,
                          start_time: nil,
-                         end_time: nil
+                         end_time: nil,
+                         deadline: deadline
                     )
 
                     errors << 'Failed to assign activity to user' unless member_activity.save
@@ -148,53 +157,6 @@ class ActivitiesController < ApplicationController
                redirect_to(@activity)
           end
      end
-
-     ## Creating and assigning in one action
-
-     # def create
-     #   @activity = Activity.new(activity_params)
-     #   if @activity.save
-     #     if params[:activity][:platoon_id] != ''
-     #       logger.info "got to platoon"
-     #       platoon = Platoon.find(params[:activity][:platoon_id])
-     #       users_in_platoon = platoon.users
-
-     #       users_in_platoon.each do |user|
-     #         member_activites = MemberActivity.new(
-     #           user_id: user.id,
-     #           activity_id: @activity.id,
-     #           date: nil,
-     #           start_time: nil,
-     #           end_time: nil
-     #         )
-     #         member_activities.save
-     #       end
-
-     #     elsif params[:activity][:user_id] != ''
-     #       user = User.find(params[:activity][:user_id])
-     #       logger.info "activity id: #{@activity.id}"
-     #       member_activity = MemberActivity.new(
-     #         user_id: user.id,
-     #         activity_id: @activity.id,
-     #         date: nil,
-     #         start_time: nil,
-     #         end_time: nil
-     #       )
-     #       logger.info("got to member activity save")
-     #       member_activity.save
-
-     #     end
-
-     #     respond_to do |format|
-     #       format.html { redirect_to(activity_url(@activity), notice: 'Activity was successfully created.') }
-     #       format.json { render(:show, status: :created, location: @activity) }
-     #     end
-
-     #   else
-     #     format.html { render(:new, status: :unprocessable_entity) }
-     #     format.json { render(json: @activity.errors, status: :unprocessable_entity) }
-     #   end
-     # end
 
      # PATCH/PUT /activities/1 or /activities/1.json
      def update

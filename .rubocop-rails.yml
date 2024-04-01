@@ -31,7 +31,10 @@ Rails/FindById:
   Enabled: true
 
 Rails/I18nLocaleAssignment: # (new in 2.11)
-  Enabled: true
+  Enabled: false
+
+Rails/I18nLocaleTexts:
+  Enabled: false
 
 Rails/Inquiry:
   Enabled: true

@@ -4,7 +4,7 @@
 class MemberActivity < ApplicationRecord
      belongs_to :user
      belongs_to :activity
-
+     # validates :activity_id, :user_id, presence: true
      validates :date, presence: false
      validates :start_time, presence: false
      validates :end_time, presence: false

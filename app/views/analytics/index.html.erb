@@ -1,18 +1,38 @@
+<% flash.each do |type, message| %>
+  <div class="alert alert-<%= type %>">
+    <%= message %>
+  </div>
+<% end %>
+
 <h1>Analytics for all of C-Company</h1>
-<form action="<%= analytics_path(@platoon) %>" method="get">
+<%= form_with(url: analytics_path(@platoon), method: "get") do %>
+  <!-- Filter Activities After Date -->
   <label for="startDate">Filter Activities After Date:</label>
   <input type="date" id="startDate" name="startDate">
-  <button type="submit">Apply Filter</button>
-</form>
+
+  <!-- Select User -->
+  <label for="user_input">Select User:</label>
+  <%= text_field_tag :user_id, nil, list: "user_info", style: "width: 300px;" %>
+  <datalist id="user_info">
+    <% User.all.each do |user| %>
+      <option value="<%= "#{user.last_name}, #{user.first_name}: #{user.email}" %>" data-user-id="<%= user.id %>"><%= "#{user.last_name}, #{user.first_name}: #{user.email}" %></option>
+    <% end %>
+  </datalist>
+
+  <!-- Submit Button -->
+  <%= submit_tag "Submit" %>
+<% end %>
+
+
 <h2>Activity Types</h2>
-<table style="border: 1px solid black;">
+<table style="border: 1px solid black; margin: 0 auto; width: 80%;">
   <thead>
     <tr>
-      <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity Type</th>
-      <th style="border: 1px solid black; padding: 8px; text-align: left;">Number of Activities</th>
-      <th style="border: 1px solid black; padding: 8px; text-align: left;">Amount of Type Assigned</th>
-      <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
-      <th style="border: 1px solid black; padding: 8px; text-align: left;">Percentage Completed</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Activity Type</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Number of Activities</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Amount of Type Assigned</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Completed</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: center;">Percentage Completed</th>
     </tr>
   </thead>
   <tbody>
@@ -53,7 +73,7 @@
 
 <br>
 <h2>Activities</h2>
-<table style="border: 1px solid black;">
+<table style="border: 1px solid black; margin: 0 auto; width: 80%;">
   <thead>
     <tr>
       <th style="border: 1px solid black; padding: 8px; text-align: left;">Activity</th>
@@ -103,22 +123,27 @@
 
 
 <br>
-<p>Platoon Specific analytics</p>
-<ul>
-  <% @platoons.each do |platoon| %>
-    <li>
-      <%= link_to platoon.name, platoon_analytics_path(platoon_id: platoon.id) %>
-    </li>
-  <% end %>
-</ul>
+<%= link_to "View Logs", '/analytics/analytics_logs', style: "display: block; margin-top: 20px; padding: 10px 20px; background-color: maroon; color: #fff; text-decoration: none; border-radius: 5px; text-align: center;" %>
+<div style="margin-bottom: 20px;">
+  <h2 style="font-size: 1.5em; margin-bottom: 10px;">Platoon Specific Analytics</h2>
+  <ul style="list-style-type: none; padding: 0;">
+    <% @platoons.each do |platoon| %>
+      <li style="margin-bottom: 5px;">
+        <%= link_to platoon.name, platoon_analytics_path(platoon_id: platoon.id) %>
+      </li>
+    <% end %>
+  </ul>
 
-<%= link_to "View Logs", '/analytics/analytics_logs' %>
-<ul>
-  <% @platoons.each do |platoon| %>
-    <li>
-      <%= link_to platoon.name, platoon_logs_path(platoon_id: platoon.id) %>
-    </li>
-  <% end %>
-</ul>
+
+  <h2 style="font-size: 1.5em; margin-top: 20px; margin-bottom: 10px;">Platoon Logs</h2>
+  <ul style="list-style-type: none; padding: 0;">
+    <% @platoons.each do |platoon| %>
+      <li style="margin-bottom: 5px;">
+        <%= link_to platoon.name, platoon_logs_path(platoon_id: platoon.id) %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
 
 

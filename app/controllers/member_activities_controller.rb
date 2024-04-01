@@ -35,8 +35,8 @@ class MemberActivitiesController < ApplicationController
                     format.html { redirect_to(member_activity_url(@member_activity), notice: 'Member activity was successfully created.') }
                     format.json { render(:show, status: :created, location: @member_activity) }
                else
-                    format.html { render(:new, status: :unprocessable_entity) }
-                    format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
+                    # format.html { render(:new, status: :unprocessable_entity) }
+                    # format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
                end
           end
      end
@@ -48,8 +48,8 @@ class MemberActivitiesController < ApplicationController
                     format.html { redirect_to(member_activity_url(@member_activity), notice: 'Member activity was successfully updated.') }
                     format.json { render(:show, status: :ok, location: @member_activity) }
                else
-                    format.html { render(:edit, status: :unprocessable_entity) }
-                    format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
+                    # format.html { render(:edit, status: :unprocessable_entity) }
+                    # format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
                end
           end
      end
@@ -57,10 +57,7 @@ class MemberActivitiesController < ApplicationController
      # DELETE /member_activities/1 or /member_activities/1.json
      def destroy
           @member_activity.destroy!
-          respond_to do |format|
-               format.html { redirect_to(member_activities_url, notice: 'Member activity was successfully destroyed.') }
-               format.json { head(:no_content) }
-          end
+          redirect_to(analytics_logs_path(@platoon), notice: 'Member activity was successfully destroyed.')
      end
 
      # Custom action to mark an activity as completed
@@ -80,24 +77,23 @@ class MemberActivitiesController < ApplicationController
      #      end
      # end
 
-
      def mark_as_complete
           @member_activity = MemberActivity.find(params[:id])
-        
+
           if @member_activity.update(completed: true, end_time: params[:end_time])
-            flash[:notice] = "Activity marked as completed successfully."
+               flash[:notice] = 'Activity marked as completed successfully.'
           else
-            flash[:alert] = "There was an issue marking the activity as completed."
+               #   flash[:alert] = "There was an issue marking the activity as completed."
           end
-        
-          redirect_to member_activities_path 
+
+          redirect_to(member_activities_path)
      end
-        
+
      # def mark_complete
      #      @member_activity = MemberActivity.find(params[:id])
      #      # Logic to update the member activity's status and end time
      # end
-     
+
      # private
 
      # Use callbacks to share common setup or constraints between actions.

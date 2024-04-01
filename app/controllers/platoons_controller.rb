@@ -25,6 +25,7 @@ class PlatoonsController < ApplicationController
 
           respond_to do |format|
                if @platoon.save
+                    User.find_by(id: @platoon.leader_id).update!(platoon_id: @platoon.id)
                     format.html { redirect_to(platoon_url(@platoon), notice: 'Platoon was successfully created.') }
                     format.json { render(:show, status: :created, location: @platoon) }
                else

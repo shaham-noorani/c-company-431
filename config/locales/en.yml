@@ -31,3 +31,6 @@
 
 en:
   hello: "Hello world"
+
+  activities:
+    created: 'Activity was successfully created.'

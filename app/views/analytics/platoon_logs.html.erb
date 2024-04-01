@@ -15,6 +15,7 @@
       <th style="border: 1px solid black; padding: 8px; text-align: left;">Start Time</th>
       <th style="border: 1px solid black; padding: 8px; text-align: left;">End Time</th>
       <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Actions</th> <!-- New column for actions -->
     </tr>
   </thead>
   <tbody>
@@ -37,6 +38,9 @@
         <td style="border: 1px solid black; padding: 8px; text-align: left;">
             <%= member_activity.completed ? 'Yes' : 'No' %>
         </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= button_to "Delete", member_activity, method: :delete, data: { confirm: "Are you sure?" }, form: { action: '#', method: :delete } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -53,6 +57,7 @@
       <th style="border: 1px solid black; padding: 8px; text-align: left;">Start Time</th>
       <th style="border: 1px solid black; padding: 8px; text-align: left;">End Time</th>
       <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Actions</th> <!-- New column for actions -->
     </tr>
   </thead>
   <tbody>
@@ -75,6 +80,9 @@
         <td style="border: 1px solid black; padding: 8px; text-align: left;">
             <%= member_activity.completed ? 'Yes' : 'No' %>
         </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= button_to "Delete", member_activity, method: :delete, data: { confirm: "Are you sure?" }, form: { action: '#', method: :delete } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -91,6 +99,7 @@
       <th style="border: 1px solid black; padding: 8px; text-align: left;">Start Time</th>
       <th style="border: 1px solid black; padding: 8px; text-align: left;">End Time</th>
       <th style="border: 1px solid black; padding: 8px; text-align: left;">Completed</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Actions</th> <!-- New column for actions -->
     </tr>
   </thead>
   <tbody>
@@ -112,6 +121,9 @@
         </td>
         <td style="border: 1px solid black; padding: 8px; text-align: left;">
             <%= member_activity.completed ? 'Yes' : 'No' %>
+        </td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;">
+            <%= button_to "Delete", member_activity, method: :delete, data: { confirm: "Are you sure?" }, form: { action: '#', method: :delete } %>
         </td>
       </tr>
     <% end %>
