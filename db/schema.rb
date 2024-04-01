@@ -49,7 +49,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_31_211425) do
     t.time "start_time"
     t.time "end_time"
     t.boolean "completed"
-    t.string "user_email"
     t.datetime "deadline"
   end
 

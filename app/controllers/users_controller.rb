@@ -7,8 +7,17 @@ class UsersController < ApplicationController
      # GET /users or /users.json
      def index
           @users = User.all
+          if params[:query].present?
+               @users = User.where('first_name LIKE :query OR last_name LIKE :query OR email LIKE :query', query: "%#{params[:query]}%")
+          end
           @my_user = User.find_by(email: session[':useremail'])
-          @users = User.where(platoon_id: @my_user.platoon_id) if @my_user.check_platoon_leader
+          if @my_user.check_platoon_leader
+               if params[:query].present?
+                    @users = User.where('(first_name LIKE :query OR last_name LIKE :query OR email LIKE :query) AND platoon_id = :platoon_id', query: "%#{params[:query]}%", platoon_id: @my_user.platoon_id)
+               else
+                    @users = User.where(platoon_id: @my_user.platoon_id)
+               end
+          end
      end
 
      # GET /users/1 or /users/1.json
