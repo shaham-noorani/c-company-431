@@ -1,20 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <p style="color: green"><%= notice %></p>
 
 <h1>Member Activities</h1>
@@ -27,8 +10,16 @@
       <p><strong>Status:</strong> <%= member_activity.completed ? 'Completed' : 'Pending' %></p>
 
       <% unless member_activity.completed %>
-        <!-- Form to mark activity as completed with end time -->
-        <%= form_with(url: mark_as_complete_member_activity_path(member_activity), method: :patch) do |form| %>
+        <!-- Form to mark activity as completed with date, start time, and end time -->
+        <%= form_with(url: mark_as_complete_member_activity_path(member_activity), method: :patch, local: true) do |form| %>
+          <div class="form-group">
+            <%= form.label :date, 'Date:' %>
+            <%= form.date_field :date, required: true, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= form.label :start_time, 'Start Time:' %>
+            <%= form.time_field :start_time, required: true, class: 'form-control' %>
+          </div>
           <div class="form-group">
             <%= form.label :end_time, 'End Time:' %>
             <%= form.time_field :end_time, required: true, class: 'form-control' %>
@@ -58,20 +49,21 @@
     toggleButton.addEventListener("click", function() {
       const completedActivities = document.querySelectorAll(".member_activity.completed");
       const pendingActivities = document.querySelectorAll(".member_activity:not(.completed)");
-      const isShowingCompleted = toggleButton.textContent.includes("Pending");
+      const isShowingCompleted = toggleButton.textContent.includes("Show Pending");
 
       completedActivities.forEach(function(activity) {
-        activity.style.display = isShowingCompleted ? "none" : "block"; 
+        activity.style.display = isShowingCompleted ? "none" : "block";
       });
 
       pendingActivities.forEach(function(activity) {
-        activity.style.display = isShowingCompleted ? "block" : "none";  
+        activity.style.display = isShowingCompleted ? "block" : "none";
       });
 
       toggleButton.textContent = isShowingCompleted ? "Show Completed Activities" : "Show Pending Activities";
     });
   });
 </script>
+
 
 
 
