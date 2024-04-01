@@ -48,55 +48,54 @@ class ActivitiesController < ApplicationController
           logger.info(params[:user_id])
      end
 
-
      # params generated in form(assign_member.html.erb) are passed to this function
      def another_function
-      # printing params
-      logger.info('params hash below')
-      logger.info(params.inspect)
+          # printing params
+          logger.info('params hash below')
+          logger.info(params.inspect)
 
-      # get user id from params
-      user_id = params[:user_id]
+          # get user id from params
+          user_id = params[:user_id]
 
-      # logger.info(user_id)
-      # logger.info(params[:activity_id])
-      # logger.info("!!!!!!!!!!!!!!!!!!!")
+          # logger.info(user_id)
+          # logger.info(params[:activity_id])
+          # logger.info("!!!!!!!!!!!!!!!!!!!")
 
-      # get activity id
-      @activity = Activity.find(params[:activity_id])
+          # get activity id
+          @activity = Activity.find(params[:activity_id])
 
-      # get deadline from params
-      deadline = params[:deadline]
+          # get deadline from params
+          deadline = params[:deadline]
 
-      # ensure user_id is present
-      if user_id.present? && deadline.present?
+          # ensure user_id is present
+          if user_id.present? && deadline.present?
 
-        user = User.find(user_id)
+               user = User.find(user_id)
 
-        # prepares data for correlating row in MemberActivity
-        member_activity = MemberActivity.new(
-            user_id: user.id,
-            activity_id: @activity.id,
-            date: Date.today,
-            start_time: nil,
-            end_time: nil,
-            deadline: deadline
-        )
+               # prepares data for correlating row in MemberActivity
+               member_activity = MemberActivity.new(
+                    user_id: user.id,
+                    activity_id: @activity.id,
+                    date: Time.zone.today,
+                    start_time: nil,
+                    end_time: nil,
+                    deadline: deadline
+               )
 
-        # saves the row to the MemberActivity table
-        if member_activity.save
-            redirect_to(@activity, notice: 'Activity was successfully assigned to the member.')
-        else
-            flash[:error] = 'Failed to assign activity to the member'
-            redirect_to(@activity)
-        end
+               # saves the row to the MemberActivity table
+               if member_activity.save
+                    redirect_to(@activity, notice: 'Activity was successfully assigned to the member.')
+               else
+                    flash[:error] = 'Failed to assign activity to the member'
+                    redirect_to(@activity)
+               end
 
-      # this else statement may not be needed
-      else
-            # Handle case where user_id or deadline are not present
-            flash[:error] = 'User ID and deadline are required'
-            redirect_to(@activity)
-      end
+          # this else statement may not be needed
+          else
+               # Handle case where user_id or deadline are not present
+               flash[:error] = 'User ID and deadline are required'
+               redirect_to(@activity)
+          end
      end
 
      # prepares variables for the assigning to platoon page when it is rendered
@@ -112,55 +111,52 @@ class ActivitiesController < ApplicationController
           logger.info(params[:platoon_id])
      end
 
-
-
      # params generated in form(assign_member.html.erb) are passed to this function
      def platoon_assignment
-      logger.info('params hash below')
-      logger.info(params.inspect)
+          logger.info('params hash below')
+          logger.info(params.inspect)
 
-      platoon_id = params[:platoon_id]
+          platoon_id = params[:platoon_id]
 
-      logger.info(platoon_id)
-      logger.info(params[:activity_id])
-      logger.info('!!!!!!!!!!!!!!!!!!!')
+          logger.info(platoon_id)
+          logger.info(params[:activity_id])
+          logger.info('!!!!!!!!!!!!!!!!!!!')
 
-      @activity = Activity.find(params[:activity_id])
+          @activity = Activity.find(params[:activity_id])
 
-      # Ensure platoon_id is present
-      if platoon_id.present?
-        platoon = Platoon.find(platoon_id)
-        errors = []
+          # Ensure platoon_id is present
+          if platoon_id.present?
+               platoon = Platoon.find(platoon_id)
+               errors = []
 
-        deadline = params[:deadline]
+               deadline = params[:deadline]
 
-        platoon.users.each do |user|
-            member_activity = MemberActivity.new(
-                  user_id: user.id,
-                  activity_id: @activity.id,
-                  date: Date.today,
-                  start_time: nil,
-                  end_time: nil,
-                  deadline: deadline
-            )
+               platoon.users.each do |user|
+                    member_activity = MemberActivity.new(
+                         user_id: user.id,
+                         activity_id: @activity.id,
+                         date: Time.zone.today,
+                         start_time: nil,
+                         end_time: nil,
+                         deadline: deadline
+                    )
 
-            errors << 'Failed to assign activity to user' unless member_activity.save
-        end
+                    errors << 'Failed to assign activity to user' unless member_activity.save
+               end
 
-        if errors.empty?
-            redirect_to(@activity, notice: 'Activity was successfully assigned to all members in the platoon.')
-        else
-            flash[:error] = errors.join('. ')
-            redirect_to(@activity)
-        end
+               if errors.empty?
+                    redirect_to(@activity, notice: 'Activity was successfully assigned to all members in the platoon.')
+               else
+                    flash[:error] = errors.join('. ')
+                    redirect_to(@activity)
+               end
 
-      else
-            # Handle case where platoon_id is not present
-            flash[:error] = 'Platoon ID is required'
-            redirect_to(@activity)
-      end
+          else
+               # Handle case where platoon_id is not present
+               flash[:error] = 'Platoon ID is required'
+               redirect_to(@activity)
+          end
      end
-
 
      # PATCH/PUT /activities/1 or /activities/1.json
      def update
