@@ -95,7 +95,7 @@ class AnalyticsController < ApplicationController
                user = User.find_by(first_name: first_name_u, last_name: last_name_u, email: email_u)
 
                if user.nil?
-                    redirect_to analytics_path(@platoon)
+                    redirect_to analytics_logs_path(@platoon)
                     flash[:error] = "Please select a valid user."
                     puts "User does not exist"
                else
@@ -121,7 +121,7 @@ class AnalyticsController < ApplicationController
           
           # Filter not completed member activities
           @not_completed_member_activities = @member_activities.where('completed IS NULL OR completed = ?', false)
-          render('analytics_logs')
+
      end
 
      def platoon_analytics
