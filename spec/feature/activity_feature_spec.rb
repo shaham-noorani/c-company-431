@@ -68,6 +68,7 @@ RSpec.describe('Activity management', type: :feature) do
                expect(page).to(have_content("Activity was successfully created."))
                click_on "Assign to Member"
                select 'user@example.com', from: 'Select User:'
+               fill_in "Deadline:", with: "2024-02-13 10:00 AM" 
                click_on 'Assign'
                expect(page).to(have_content("Activity was successfully assigned to the member."))
           end
