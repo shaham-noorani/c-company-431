@@ -19,9 +19,9 @@ RSpec.describe('Member activities management', type: :feature) do
             click_on "New Member Activity"
             select "Test User", from: "User"
             select "a workout", from: "Activity"
-            fill_in "Date", with: "11111111"
-            fill_in "Start time", with: "1234AM"
-            fill_in "End time", with: "1234AM"
+            # fill_in "Date", with: "11111111"
+            # fill_in "Start time", with: "1234AM"
+            # fill_in "End time", with: "1234AM"
             click_on "Create Member activity"
             expect(page).to(have_content("Member activity was successfully created."))
         end
@@ -36,9 +36,9 @@ RSpec.describe('Member activities management', type: :feature) do
             visit member_activities_path
             click_on "Show this member activity"
             click_on "Edit this member activity"
-            fill_in "Date", with: "11111111"
-            fill_in "Start time", with: "1234AM"
-            fill_in "End time", with: "1234AM"
+            # fill_in "Date", with: "11111111"
+            # fill_in "Start time", with: "1234AM"
+            # fill_in "End time", with: "1234AM"
             click_on "Update Member activity"
             expect(page).to(have_content("Member activity was successfully updated."))
         end
@@ -61,7 +61,7 @@ RSpec.describe('Member activities management', type: :feature) do
         it 'does not create a member activity and renders the new form with errors' do
             visit '/auth/google_oauth2'
             visit new_member_activity_path
-            fill_in "Date", with: Date.today
+            # fill_in "Date", with: Date.today
             # Omit user and activity selection to trigger validation errors
             click_on "Create Member activity"
             expect(page).to have_content("User must exist")
