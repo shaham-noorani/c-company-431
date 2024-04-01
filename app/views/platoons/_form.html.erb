@@ -16,9 +16,9 @@
     <%= form.text_field :name %>
   </div>
 
-  <div>
-    <%= form.label :leader_id, style: "display: block" %>
-    <%= form.number_field :leader_id %>
+  <div class="field">
+    <%= form.label :leader_id, 'Select User:' %>
+    <%= form.select :leader_id, options_for_select(User.order(:id).map { |user| [user.email, user.id] }) %>
   </div>
 
   <div>

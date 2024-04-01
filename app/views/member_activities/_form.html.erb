@@ -1,3 +1,4 @@
+<!-- _form.html.erb -->
 <%= form_with(model: member_activity) do |form| %>
   <% if member_activity.errors.any? %>
     <div style="color: red">
@@ -12,53 +13,47 @@
   <% end %>
 
   <div>
-    <%= form.label :user_id, style: "display: block" %>
+    <%= form.label :user_id, 'User Name:', style: "display: block" %>
     <%= form.collection_select :user_id, User.order(:first_name, :last_name), :id, 
           lambda { |u| "#{u.first_name} #{u.last_name}" },
-          { prompt: 'Select a User' } %>
+          { prompt: 'Select a User' }, required: true %>
   </div>
 
   <br>
 
   <div>
-    <%= form.label :activity_id, style: "display: block" %>
-    <%= form.collection_select :activity_id, Activity.order(:name), :id, :name, prompt: 'Select an Activity' %>
+    <%= form.label :activity_id, 'Activity Name:', style: "display: block" %>
+    <%= form.collection_select :activity_id, Activity.order(:name), :id, :name, 
+          { prompt: 'Select an Activity' }, required: true %>
   </div>
 
   <br>
 
-  <div>
-    <%= form.label :date %>
-    <%= form.date_field :date %>
-  </div>
+  <% unless local_assigns[:hide_extra_fields] %>
+    <div>
+      <%= form.label :date %>
+      <%= form.date_field :date %>
+    </div>
 
-  <br>
+    <br>
 
-  <div>
-    <%= form.label :start_time, style: "display: block" %>
-    <%= form.time_field :start_time %>
-  </div>
+    <div>
+      <%= form.label :start_time, 'Start Time:', style: "display: block" %>
+      <%= form.time_field :start_time %>
+    </div>
 
-  <br>
+    <br>
 
-  <div>
-    <%= form.label :end_time, style: "display: block" %>
-    <%= form.time_field :end_time %>
-  </div>
+    <div>
+      <%= form.label :end_time, 'End Time:', style: "display: block" %>
+      <%= form.time_field :end_time %>
+    </div>
 
-  <br>
-
-  <!-- 
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.select :status, ['Pending', 'Completed'], { prompt: 'Select Status' } %>
-  </div>
-
-  <br>
-  -->
+    <br>
+  <% end %>
   
-
   <div>
     <%= form.submit %>
   </div>
 <% end %>
+
