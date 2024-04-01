@@ -28,7 +28,8 @@ class MemberActivitiesController < ApplicationController
 
      # POST /member_activities or /member_activities.json
      def create
-          @member_activity = MemberActivity.new(member_activity_params)
+          member_activity_params_with_user = member_activity_params.merge(user_id: current_user.id)
+          @member_activity = MemberActivity.new(member_activity_params_with_user)
 
           respond_to do |format|
                if @member_activity.save

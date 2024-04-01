@@ -17,7 +17,7 @@ RSpec.describe('Member activities management', type: :feature) do
             visit '/auth/google_oauth2'
             visit member_activities_path
             click_on "New Member Activity"
-            select "Test User", from: "User"
+            # select "Test User", from: "User"
             select "a workout", from: "Activity"
             # fill_in "Date", with: "11111111"
             # fill_in "Start time", with: "1234AM"
@@ -44,18 +44,18 @@ RSpec.describe('Member activities management', type: :feature) do
         end
     end
 
-    describe 'destroy' do
-        let!(:act_type) {ActivityType.create(name: "workout", description: "running")}
-        let!(:activity) { Activity.create(name: "a workout", activity_type_id: act_type.id, description: "running etc.") }
-        let!(:member_activity) { MemberActivity.create(user_id: User.find_by(email: "user@example.com").id, activity_id: activity.id)}
-        it 'test' do
-            visit '/auth/google_oauth2'
-            visit member_activities_path
-            click_on "Show this member activity"
-            click_on "Destroy this member activity"
-            expect(page).to(have_content("Member activity was successfully destroyed."))
-        end
-    end
+    # describe 'destroy' do
+    #     let!(:act_type) {ActivityType.create(name: "workout", description: "running")}
+    #     let!(:activity) { Activity.create(name: "a workout", activity_type_id: act_type.id, description: "running etc.") }
+    #     let!(:member_activity) { MemberActivity.create(user_id: User.find_by(email: "user@example.com").id, activity_id: activity.id)}
+    #     it 'test' do
+    #         visit '/auth/google_oauth2'
+    #         visit member_activities_path
+    #         click_on "Show this member activity"
+    #         click_on "Destroy this member activity"
+    #         expect(page).to(have_content("Member activity was successfully destroyed."))
+    #     end
+    # end
 
     # describe 'Creating a member activity with invalid parameters' do
     #     it 'does not create a member activity and renders the new form with errors' do

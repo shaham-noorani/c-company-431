@@ -1,5 +1,6 @@
-<h1>Editing member activity</h1>
-<%= render "form", member_activity: @member_activity %>
+<h1>Editing Activity:<br>
+<%= @member_activity.activity.name %></h1>
+<%= render "form", member_activity: @member_activity, hide_activity_edit: true%>
 
 <br>
 

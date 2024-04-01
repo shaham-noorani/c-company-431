@@ -12,20 +12,13 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :user_id, 'User Name:', style: "display: block" %>
-    <%= form.collection_select :user_id, User.order(:first_name, :last_name), :id, 
-          lambda { |u| "#{u.first_name} #{u.last_name}" },
-          { prompt: 'Select a User' }, required: true %>
-  </div>
-
-  <br>
-
-  <div>
-    <%= form.label :activity_id, 'Activity Name:', style: "display: block" %>
-    <%= form.collection_select :activity_id, Activity.order(:name), :id, :name, 
-          { prompt: 'Select an Activity' }, required: true %>
-  </div>
+  <% unless local_assigns[:hide_activity_edit] %>
+    <div>
+      <%= form.label :activity_id, 'Activity Name:', style: "display: block" %>
+      <%= form.collection_select :activity_id, Activity.order(:name), :id, :name, 
+            { prompt: 'Select an Activity' }, required: true %>
+    </div>
+  <% end %>
 
   <br>
 
@@ -56,4 +49,5 @@
     <%= form.submit %>
   </div>
 <% end %>
+
 

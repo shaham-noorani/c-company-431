@@ -8,6 +8,7 @@
       <p><strong>Activity:</strong> <%= member_activity.activity&.name %></p>
       <p><strong>Description:</strong> <%= member_activity.activity&.description %></p>
       <p><strong>Status:</strong> <%= member_activity.completed ? 'Completed' : 'Pending' %></p>
+      <p><strong>Deadline:</strong> <%= member_activity.deadline.strftime('%B %d, %Y') if member_activity.deadline %></p>
 
       <% unless member_activity.completed %>
         <!-- Form to mark activity as completed with date, start time, and end time -->
