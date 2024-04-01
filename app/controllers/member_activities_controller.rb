@@ -34,7 +34,7 @@ class MemberActivitiesController < ApplicationController
                if @member_activity.save
                     format.html { redirect_to(member_activity_url(@member_activity), notice: 'Member activity was successfully created.') }
                     format.json { render(:show, status: :created, location: @member_activity) }
-               else
+                    # else
                     # format.html { render(:new, status: :unprocessable_entity) }
                     # format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
                end
@@ -47,7 +47,7 @@ class MemberActivitiesController < ApplicationController
                if @member_activity.update(member_activity_params)
                     format.html { redirect_to(member_activity_url(@member_activity), notice: 'Member activity was successfully updated.') }
                     format.json { render(:show, status: :ok, location: @member_activity) }
-               else
+                    # else
                     # format.html { render(:edit, status: :unprocessable_entity) }
                     # format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
                end
@@ -82,7 +82,7 @@ class MemberActivitiesController < ApplicationController
 
           if @member_activity.update(completed: true, end_time: params[:end_time])
                flash[:notice] = 'Activity marked as completed successfully.'
-          else
+               # else
                #   flash[:alert] = "There was an issue marking the activity as completed."
           end
 
@@ -103,6 +103,7 @@ class MemberActivitiesController < ApplicationController
 
      # Only allow a list of trusted parameters through.
      def member_activity_params
-          params.require(:member_activity).permit(:user_id, :activity_id, :date, :start_time, :end_time, :completed) # Ensure you include :completed if it's part of your form
+          # Ensure you include :completed if it's part of your form
+          params.require(:member_activity).permit(:user_id, :activity_id, :date, :start_time, :end_time, :completed)
      end
 end
