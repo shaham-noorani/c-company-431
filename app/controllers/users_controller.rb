@@ -12,11 +12,13 @@ class UsersController < ApplicationController
           end
           @my_user = User.find_by(email: session[':useremail'])
           if @my_user.check_platoon_leader
-               if params[:query].present?
-                    @users = User.where('(first_name LIKE :query OR last_name LIKE :query OR email LIKE :query) AND platoon_id = :platoon_id', query: "%#{params[:query]}%", platoon_id: @my_user.platoon_id)
-               else
-                    @users = User.where(platoon_id: @my_user.platoon_id)
-               end
+               @users = if params[:query].present?
+                             User.where('(first_name LIKE :query OR last_name LIKE :query OR email LIKE :query) AND platoon_id = :platoon_id',
+                                        query: "%#{params[:query]}%", platoon_id: @my_user.platoon_id
+                             )
+                        else
+                             User.where(platoon_id: @my_user.platoon_id)
+                        end
           end
      end
 
