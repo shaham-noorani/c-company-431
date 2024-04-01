@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MemberActivitiesController < ApplicationController
-     before_action :set_member_activity, only: %i[show edit update destroy mark_complete]
+     before_action :set_member_activity, only: %i[show edit update destroy]
 
      # GET /member_activities or /member_activities.json
      def index
