@@ -1,4 +1,4 @@
-<h3>Select a Platoon</h3>
+<h3>Select a Platoon and Deadline</h3>
 
 <%= form_with(url: platoon_assignment_path, method: :post) do |form| %>
     <!-- Hidden field for activity_id: will be sent along with params upon form submission-->
@@ -8,6 +8,15 @@
       <%= form.label :platoon_id, 'Select Platoon:' %>
       <%= form.select :platoon_id, options_for_select(@platoon.map { |platoon| [platoon.name, platoon.id] }) %>
     </div>
+
+    <br>
+
+    <div class="field">
+      <%= form.label :deadline, 'Deadline:' %>
+      <%= form.datetime_field :deadline %>
+    </div>
+
+    <br>
 
     <%= form.submit "Assign" %>
   <% end %>

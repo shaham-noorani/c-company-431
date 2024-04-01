@@ -35,8 +35,8 @@ class MemberActivitiesController < ApplicationController
                     format.html { redirect_to(member_activity_url(@member_activity), notice: 'Member activity was successfully created.') }
                     format.json { render(:show, status: :created, location: @member_activity) }
                else
-                    format.html { render(:new, status: :unprocessable_entity) }
-                    format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
+                    # format.html { render(:new, status: :unprocessable_entity) }
+                    # format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
                end
           end
      end
@@ -48,8 +48,8 @@ class MemberActivitiesController < ApplicationController
                     format.html { redirect_to(member_activity_url(@member_activity), notice: 'Member activity was successfully updated.') }
                     format.json { render(:show, status: :ok, location: @member_activity) }
                else
-                    format.html { render(:edit, status: :unprocessable_entity) }
-                    format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
+                    # format.html { render(:edit, status: :unprocessable_entity) }
+                    # format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
                end
           end
      end
@@ -84,7 +84,7 @@ class MemberActivitiesController < ApplicationController
           if @member_activity.update(completed: true, end_time: params[:end_time])
             flash[:notice] = "Activity marked as completed successfully."
           else
-            flash[:alert] = "There was an issue marking the activity as completed."
+          #   flash[:alert] = "There was an issue marking the activity as completed."
           end
         
           redirect_to member_activities_path 
