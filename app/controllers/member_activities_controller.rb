@@ -121,20 +121,48 @@ class MemberActivitiesController < ApplicationController
      #      end
      #    end
 
-     def index
-          # Start with a base scope of MemberActivity for the current user
-          my_user = User.find_by(email: session[':useremail'])
+     # def index
+     #      # Start with a base scope of MemberActivity for the current user
+     #      my_user = User.find_by(email: session[':useremail'])
         
+     #      if my_user
+     #        @member_activities = MemberActivity.where(user_id: my_user.id).includes(:activity)
+        
+     #        # Apply search filter if a search term is provided
+     #        if params[:search].present?
+     #          @member_activities = @member_activities.joins(:activity)
+     #                                                 .where("activities.name ILIKE ?", "%#{params[:search]}%")
+     #                                                 .order(Arel.sql("CASE WHEN activities.name ILIKE '%#{params[:search]}%' THEN 0 ELSE 1 END, activities.name ASC"))
+     #        else
+     #          # If no search term, optionally order by activity name or another attribute
+     #          @member_activities = @member_activities.order('activities.name ASC')
+     #        end
+        
+     #        logger.info("Filtered Member Activities: #{@member_activities}")
+     #      else
+     #        @member_activities = []
+     #        logger.info('No user found, no activities to display.')
+     #      end
+     # end
+        
+     def index
+          my_user = User.find_by(email: session[':useremail'])
+          
           if my_user
             @member_activities = MemberActivity.where(user_id: my_user.id).includes(:activity)
         
-            # Apply search filter if a search term is provided
             if params[:search].present?
+              activities = Activity.arel_table
+              # Construct a case statement with Arel
+              search_condition = activities[:name].matches("%#{params[:search]}%")
+              search_order = Arel::Nodes::Case.new
+                                .when(search_condition, 0)
+                                .else(1)
+        
               @member_activities = @member_activities.joins(:activity)
-                                                     .where("activities.name ILIKE ?", "%#{params[:search]}%")
-                                                     .order(Arel.sql("CASE WHEN activities.name ILIKE '%#{params[:search]}%' THEN 0 ELSE 1 END, activities.name ASC"))
+                                                     .where(search_condition)
+                                                     .order(search_order, activities[:name].asc)
             else
-              # If no search term, optionally order by activity name or another attribute
               @member_activities = @member_activities.order('activities.name ASC')
             end
         
@@ -144,6 +172,7 @@ class MemberActivitiesController < ApplicationController
             logger.info('No user found, no activities to display.')
           end
      end
+        
         
      def completed
           # Assuming you have a method to get the current user, like 'current_user'
