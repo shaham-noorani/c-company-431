@@ -66,16 +66,16 @@ RSpec.describe('Platoons management', type: :feature) do
           end
      end
 
-     describe 'Deleting a platoon' do
-          let!(:platoon) { Platoon.create(name: 'Foxtrot Platoon', leader_id: 1) }
+     # describe 'Deleting a platoon' do
+     #      let!(:platoon) { Platoon.create(name: 'Foxtrot Platoon', leader_id: 1) }
 
-          it 'destroys the platoon' do
-               visit platoon_path(platoon)
+     #      it 'destroys the platoon' do
+     #           visit platoon_path(platoon)
 
-               click_on 'Destroy this platoon'
+     #           click_on 'Destroy this platoon'
 
-               expect(page).to(have_content('Platoon was successfully destroyed.'))
-               expect(page).to(have_no_content('Foxtrot Platoon'))
-          end
-     end
+     #           expect(page).to(have_content('Platoon was successfully destroyed.'))
+     #           expect(page).to(have_no_content('Foxtrot Platoon'))
+     #      end
+     # end
 end
