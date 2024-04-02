@@ -1,11 +1,20 @@
 Rails.application.routes.draw do
+  # resources :member_activities do
+  #   member do
+  #     patch :mark_as_complete
+  #   end
+  # end
   resources :member_activities do
+    collection do
+      get :completed  
+    end
     member do
       patch :mark_as_complete
     end
   end
   resources :sessions, only: [:new, :create, :destroy]
   get '/logout', to: 'sessions#destroy', as: 'logout'
+  
   resources :member_events
   resources :activity_types
   resources :activities do
@@ -22,7 +31,6 @@ Rails.application.routes.draw do
   resources :events
   resources :users
   resources :platoons
-
   get '/auth/:provider/callback', to: 'sessions#create'
 
   get 'analytics', to: 'analytics#index'
