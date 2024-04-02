@@ -1,8 +1,73 @@
 # frozen_string_literal: true
 
 class MemberActivitiesController < ApplicationController
-     before_action :set_member_activity, only: %i[show edit update destroy mark_complete]
+     before_action :set_member_activity, only: %i[show edit update destroy]
 
+     # def index
+     #      @member_activities = MemberActivity.includes(:activity)  # Ensures the activities are preloaded
+     #                                         .where(user_id: current_user.id)  # Adjust this to your user scoping
+
+     #      if params[:search].present?
+     #        # Break down the query for clarity
+     #        @member_activities = @member_activities.joins(:activity)  # Ensures activities table is joined for the WHERE clause
+     #                                               .where("activities.name ILIKE ?", "%#{params[:search]}%")
+     #                                               .order(Arel.sql("CASE WHEN activities.name ILIKE '%#{params[:search]}%' THEN 0 ELSE 1 END, activities.name ASC"))
+     #      else
+     #        @member_activities = @member_activities.order("activities.name ASC")
+     #      end
+     #    end
+
+     # def index
+     #      # Start with a base scope of MemberActivity for the current user
+     #      my_user = User.find_by(email: session[':useremail'])
+
+     #      if my_user
+     #        @member_activities = MemberActivity.where(user_id: my_user.id).includes(:activity)
+
+     #        # Apply search filter if a search term is provided
+     #        if params[:search].present?
+     #          @member_activities = @member_activities.joins(:activity)
+     #                                                 .where("activities.name ILIKE ?", "%#{params[:search]}%")
+     #                                                 .order(Arel.sql("CASE WHEN activities.name ILIKE '%#{params[:search]}%' THEN 0 ELSE 1 END, activities.name ASC"))
+     #        else
+     #          # If no search term, optionally order by activity name or another attribute
+     #          @member_activities = @member_activities.order('activities.name ASC')
+     #        end
+
+     #        logger.info("Filtered Member Activities: #{@member_activities}")
+     #      else
+     #        @member_activities = []
+     #        logger.info('No user found, no activities to display.')
+     #      end
+     # end
+
+     def index
+          my_user = User.find_by(email: session[':useremail'])
+
+          if my_user
+               @member_activities = MemberActivity.where(user_id: my_user.id).includes(:activity)
+
+               if params[:search].present?
+                    activities = Activity.arel_table
+                    # Construct a case statement with Arel
+                    search_condition = activities[:name].matches("%#{params[:search]}%")
+                    search_order = Arel::Nodes::Case.new
+                                                    .when(search_condition, 0)
+                                                    .else(1)
+
+                    @member_activities = @member_activities.joins(:activity)
+                                                           .where(search_condition)
+                                                           .order(search_order, activities[:name].asc)
+               else
+                    @member_activities = @member_activities.order('activities.name ASC')
+               end
+
+               logger.info("Filtered Member Activities: #{@member_activities}")
+          else
+               @member_activities = []
+               logger.info('No user found, no activities to display.')
+          end
+     end
      # GET /member_activities or /member_activities.json
      # def index
      #      # Assuming you have a method to get the current user, like 'current_user'
@@ -35,7 +100,7 @@ class MemberActivitiesController < ApplicationController
                if @member_activity.save
                     format.html { redirect_to(member_activity_url(@member_activity), notice: 'Member activity was successfully created.') }
                     format.json { render(:show, status: :created, location: @member_activity) }
-               else
+                    # else
                     # format.html { render(:new, status: :unprocessable_entity) }
                     # format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
                end
@@ -48,7 +113,7 @@ class MemberActivitiesController < ApplicationController
                if @member_activity.update(member_activity_params)
                     format.html { redirect_to(member_activity_url(@member_activity), notice: 'Member activity was successfully updated.') }
                     format.json { render(:show, status: :ok, location: @member_activity) }
-               else
+                    # else
                     # format.html { render(:edit, status: :unprocessable_entity) }
                     # format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
                end
@@ -83,7 +148,7 @@ class MemberActivitiesController < ApplicationController
 
           if @member_activity.update(completed: true, end_time: params[:end_time])
                flash[:notice] = 'Activity marked as completed successfully.'
-          else
+               # else
                #   flash[:alert] = "There was an issue marking the activity as completed."
           end
 
@@ -104,7 +169,8 @@ class MemberActivitiesController < ApplicationController
 
      # Only allow a list of trusted parameters through.
      def member_activity_params
-          params.require(:member_activity).permit(:user_id, :activity_id, :date, :start_time, :end_time, :completed) # Ensure you include :completed if it's part of your form
+          # Ensure you include :completed if it's part of your form
+          params.require(:member_activity).permit(:user_id, :activity_id, :date, :start_time, :end_time, :completed)
      end
 
 
