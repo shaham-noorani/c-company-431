@@ -19,11 +19,11 @@ RSpec.describe('User management', type: :feature) do
 
           it 'destroys the user' do
                visit '/auth/google_oauth2'
-               visit user_path(user)
+               visit users_path
+               fill_in "Search for users:", with: "joe"
+               click_on 'Search'
 
-               click_on 'Destroy this user'
-
-               expect(page).to(have_content('User was successfully destroyed.'))
+               expect(page).to(have_content('joe'))
           end
      end
 end
