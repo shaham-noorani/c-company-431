@@ -45,7 +45,7 @@ jobs:
           brakeman -o brakeman.txt
       - name: Run rubocop
         run: |
-          echo "Rubocop ran and everything was fine."
+          bundler exec rubocop  --out rubocop.txt
       - name: Upload coverage results
         uses: actions/upload-artifact@master
         if: always()

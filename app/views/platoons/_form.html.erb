@@ -12,14 +12,18 @@
   <% end %>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label :name, 'Platoon Name:' %>
     <%= form.text_field :name %>
   </div>
 
+  <br />
+
   <div class="field">
-    <%= form.label :leader_id, 'Select User:' %>
+    <%= form.label :leader_id, 'Set Leader:' %>
     <%= form.select :leader_id, options_for_select(User.order(:id).map { |user| [user.email, user.id] }) %>
   </div>
+
+  <br />
 
   <div>
     <%= form.submit %>

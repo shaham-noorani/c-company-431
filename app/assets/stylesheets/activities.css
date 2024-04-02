@@ -1,0 +1,40 @@
+
+.activity-card {
+    border: 3px solid #792727;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table th {
+    text-align: left;
+  }
+  
+  .button-group {
+    margin-top: 10px;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: #650000;
+    color: #fff;
+    border-radius: 4px;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  

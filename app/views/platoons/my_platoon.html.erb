@@ -1,8 +1,29 @@
-<h1>My Platoon - <%= current_user.platoon.name %></h1>
-<ul>
-  <% @members.each do |member| %>
-    <li>
-      <%= member.first_name %> <%= member.last_name %> - <%= member.member_activities.reject(&:completed?).count %> activities uncompleted
-    </li>
-  <% end %>
-</ul>
+<%= stylesheet_link_tag 'my_platoon.css' %>
+
+<div class="page-platoon">
+  <h1 class="platoon-header">My Platoon - <%= current_user.platoon.name %></h1>
+  <ul class="platoon-list">
+    <% @members.each do |member| %>
+      <li class="member-item">
+        <b><span class="member-name"><%= member.first_name %> <%= member.last_name %></span></b>
+        <% if member.member_activities.reject(&:completed?).count > 0 %>
+        <br />
+          <span><%= member.member_activities.reject(&:completed?).count %> <%= member.member_activities.reject(&:completed?).count == 1 ? 'activity' : 'activities' %> uncompleted:</span>
+          <ul class="member-activities">
+            <% member.member_activities.reject(&:completed?).each do |member_activity| %>
+              <li class="activity-item">
+                <span >
+                  <%= link_to Activity.find(member_activity.activity_id).name, activity_path(member_activity.activity_id) %>
+                </span>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <br />
+          <span>All activities completed!</span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+

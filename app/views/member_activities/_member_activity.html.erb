@@ -30,5 +30,12 @@
     </p>
   <% end %>
 
+  <% if member_activity.deadline %>
+    <p>
+      <strong>Deadline:</strong>
+      <%= member_activity.deadline.strftime('%B %d, %Y') %> <!-- e.g., January 01, 2024 -->
+    </p>
+  <% end %>
+
 </div>
 

@@ -1,13 +1,21 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Member Activities</h1>
-
+<%= form_with(url: member_activities_path, method: :get, local: true, class: "search-form") do |form| %>
+  <div class="form-group">
+    <%= form.label :search, "Search by Activity Name:" %>
+    <%= form.text_field :search, value: params[:search], class: 'form-control' %>
+  </div>
+  <%= form.submit "Search", class: 'btn btn-primary' %>
+<% end %>
+<h1>My Activities</h1>
+<%= link_to "Assign Yourslef an Activity", new_member_activity_path, class: 'btn btn-primary' %>
 <div id="member_activities">
   <% @member_activities.each do |member_activity| %>
     <div class="member_activity <%= 'completed' if member_activity.completed %>" style="<%= 'display: none;' if member_activity.completed %>">
       <p><strong>Activity:</strong> <%= member_activity.activity&.name %></p>
       <p><strong>Description:</strong> <%= member_activity.activity&.description %></p>
       <p><strong>Status:</strong> <%= member_activity.completed ? 'Completed' : 'Pending' %></p>
+      <p><strong>Deadline:</strong> <%= member_activity.deadline.strftime('%B %d, %Y') if member_activity.deadline %></p>
 
       <% unless member_activity.completed %>
         <!-- Form to mark activity as completed with date, start time, and end time -->
@@ -37,11 +45,8 @@
   <% end %>
 </div>
 
-<div>
-  <button id="toggleCompletedActivities" class="btn btn-info" type="button">Show Completed Activities</button>
-</div>
 
-<%= link_to "New Member Activity", new_member_activity_path, class: 'btn btn-primary' %>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
