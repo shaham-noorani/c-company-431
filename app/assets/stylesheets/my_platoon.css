@@ -1,0 +1,56 @@
+/* General page styling */
+.page-platoon {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Platoon header styling */
+.platoon-header {
+  color: #444;
+  margin-bottom: 20px;
+}
+
+/* Styling for platoon members list */
+.platoon-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Styling for individual member items */
+.member-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the activities list inside each member item */
+.member-activities {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+/* Styling for individual activity items */
+.activity-item {
+  background: none;
+  border: none;
+  padding-left: 10px;
+  box-shadow: none;
+  position: relative;
+}
+
+/* Adding a custom bullet point */
+.activity-item:before {
+  content: '— ';
+  position: absolute;
+  left: -15px;
+}
+
+/* Styling for the text of individual items */
+.member-name, .activity-name {
+  font-size: 16px;
+}

@@ -1,14 +1,33 @@
+<%= stylesheet_link_tag 'platoons.css' %>
+
 <p style="color: green"><%= notice %></p>
 
 <h1>Platoons</h1>
 
 <div id="platoons">
   <% @platoons.each do |platoon| %>
-    <%= render platoon %>
-    <p>
-      <%= link_to "Show this platoon", platoon %>
-    </p>
+    <div class="card">
+      <div class="card-body">
+        <h2><%= platoon.name %></h2>
+        <p>
+          <strong>Leader:</strong>
+          <%= User.find(platoon.leader_id).first_name %> <%= User.find(platoon.leader_id).last_name %> - <%= User.find(platoon.leader_id).email %>
+        </p>
+        <p>
+          <strong>Platoon Members:</strong>
+          <ul>
+            <% platoon.users.each do |user| %>
+              <% next if user.id == platoon.leader_id %>
+              <li><%= user.first_name %> <%= user.last_name %> - <%= user.email %></li>
+            <% end %>
+          </ul>
+        </p>
+        <%= link_to "Edit this platoon", edit_platoon_path(platoon) %>
+      </div>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New platoon", new_platoon_path %>
+<button style="margin-top: 8px; padding: 4px; background-color: #800000; ">
+  <a href="/platoons/new" style="color: white">New Platoon</a>
+</button>
