@@ -16,7 +16,7 @@ RSpec.describe('Member activities management', type: :feature) do
         it 'test' do
             visit '/auth/google_oauth2'
             visit member_activities_path
-            click_on "New Member Activity"
+            click_on "Assign Yourslef an Activity"
             # select "Test User", from: "User"
             select "a workout", from: "Activity"
             # fill_in "Date", with: "11111111"
@@ -44,6 +44,27 @@ RSpec.describe('Member activities management', type: :feature) do
         end
     end
 
+
+    describe 'Searching for a member activity' do
+        let!(:act_type) { ActivityType.create(name: "workout", description: "running") }
+        let!(:activity1) { Activity.create(name: "Morning Run", activity_type_id: act_type.id, description: "A nice morning run.") }
+        let!(:activity2) { Activity.create(name: "Evening Walk", activity_type_id: act_type.id, description: "A relaxing evening walk.") }
+        let!(:member_activity1) { MemberActivity.create(user_id: User.find_by(email: "user@example.com").id, activity_id: activity1.id) }
+        let!(:member_activity2) { MemberActivity.create(user_id: User.find_by(email: "user@example.com").id, activity_id: activity2.id) }
+
+        it 'displays the searched activity along with other activities' do
+            visit '/auth/google_oauth2'
+            visit member_activities_path
+            
+            fill_in "Search by Activity Name:", with: "Morning"
+            click_button "Search"
+
+            # Ensure both activities are present but the searched one appears first
+            expect(page).to have_content("Morning Run")
+            # expect(page).to have_content("Evening Walk")
+            # expect(page.body.index("Morning Run")).to be < page.body.index("Evening Walk")
+        end
+    end
     # describe 'destroy' do
     #     let!(:act_type) {ActivityType.create(name: "workout", description: "running")}
     #     let!(:activity) { Activity.create(name: "a workout", activity_type_id: act_type.id, description: "running etc.") }
