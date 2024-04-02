@@ -11,16 +11,28 @@ RSpec.describe('User management', type: :feature) do
          }
     )
     end
-    describe 'destroying a user' do
+    describe 'searching for a user sunny' do
         let!(:user) { User.create(first_name: 'joe', last_name: 'bob', role: 'pleb', email: 'joe@gmail.com') }
 
-        it 'destroys the user' do
-             visit '/auth/google_oauth2'
-             visit user_path(user)
+        it 'search the user' do
+            visit '/auth/google_oauth2'
+            visit users_path
 
-             click_on 'Destroy this user'
-
-             expect(page).to(have_content('User was successfully destroyed.'))
+            fill_in "Search for users:", with: "j"
+            click_on "Search"
+            expect(page).to(have_content('joe'))
         end
-   end
+    end
+    describe 'searching for a user rainy' do
+        let!(:user) { User.create(first_name: 'joe', last_name: 'bob', role: 'pleb', email: 'joe@gmail.com') }
+
+        it 'search the user' do
+            visit '/auth/google_oauth2'
+            visit users_path
+
+            fill_in "Search for users:", with: "z"
+            click_on "Search"
+            expect(page).not_to have_content('joe')
+        end
+    end
 end
