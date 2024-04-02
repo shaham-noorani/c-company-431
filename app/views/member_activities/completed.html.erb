@@ -1,5 +1,11 @@
 <p style="color: green"><%= notice %></p>
-
+<%= form_with(url: completed_member_activities_path, method: :get, local: true, class: "search-form") do |form| %>
+    <div class="form-group">
+      <%= form.label :search, "Search Completed Activities:" %>
+      <%= form.text_field :search, value: params[:search], class: 'form-control' %>
+    </div>
+    <%= form.submit "Search", class: 'btn btn-primary' %>
+<% end %>
 <h1>Completed Activities</h1>
 
 <% if @completed_member_activities.any? %>

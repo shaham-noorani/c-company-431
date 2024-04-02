@@ -65,6 +65,65 @@ RSpec.describe('Member activities management', type: :feature) do
             # expect(page.body.index("Morning Run")).to be < page.body.index("Evening Walk")
         end
     end
+
+    describe 'Searching for a completed member activity' do
+        # let!(:user) { User.create!(email: "user@example.com", password: "password", first_name: "Test", last_name: "User") }
+        let!(:act_type) { ActivityType.create(name: "workout", description: "running") }
+        let!(:activity1) { Activity.create(name: "Morning Run", activity_type_id: act_type.id, description: "A nice morning run.") }
+        let!(:activity2) { Activity.create(name: "Evening Walk", activity_type_id: act_type.id, description: "A relaxing evening walk.") }
+        let!(:completed_activity1) { MemberActivity.create(user_id: User.find_by(email: "user@example.com").id, activity_id: activity1.id, completed: true) }
+        let!(:completed_activity2) { MemberActivity.create(user_id: User.find_by(email: "user@example.com").id, activity_id: activity2.id, completed: true) }
+      
+        # before do
+        #   # Sign in the user
+        #   visit new_user_session_path  # Adjust the path as per your app's sign-in route
+        #   fill_in 'Email', with: user.email
+        #   fill_in 'Password', with: 'password'
+        #   click_button 'Log in'
+          
+        #   # Navigate to the completed activities page
+        #   visit completed_member_activities_path
+        # end
+        
+        it 'displays the searched completed activity along with other activities' do
+            visit '/auth/google_oauth2'
+            visit completed_member_activities_path
+            
+            fill_in "Search Completed Activities:", with: "Morning"
+            click_button "Search"
+
+            # Ensure both activities are present but the searched one appears first
+            expect(page).to have_content("Morning Run")
+            # fill_in "Search by Activity Name:", with: "Morning"
+            # click_button "Search"
+        
+            # Ensure both activities are present but the searched one appears first
+            # expect(page).to have_content("Morning Run")
+            # expect(page).to have_content("Evening Walk")
+            # expect(page.body.index("Morning Run")).to be < page.body.index("Evening Walk")
+        end
+
+        it 'displays the searched completed activity not found' do
+            visit '/auth/google_oauth2'
+            visit completed_member_activities_path
+            
+            fill_in "Search Completed Activities:", with: "random"
+            click_button "Search"
+
+            # Ensure both activities are present but the searched one appears first
+            # expect(page).to have_content("Morning Run")
+            expect(page).not_to have_css('.member_activity')
+            expect(page).to have_content('No completed activities found.')
+            # fill_in "Search by Activity Name:", with: "Morning"
+            # click_button "Search"
+        
+            # Ensure both activities are present but the searched one appears first
+            # expect(page).to have_content("Morning Run")
+            # expect(page).to have_content("Evening Walk")
+            # expect(page.body.index("Morning Run")).to be < page.body.index("Evening Walk")
+        end
+      end
+      
     # describe 'destroy' do
     #     let!(:act_type) {ActivityType.create(name: "workout", description: "running")}
     #     let!(:activity) { Activity.create(name: "a workout", activity_type_id: act_type.id, description: "running etc.") }

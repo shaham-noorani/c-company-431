@@ -174,10 +174,27 @@ class MemberActivitiesController < ApplicationController
      end
         
         
+     # def completed
+     #      # Assuming you have a method to get the current user, like 'current_user'
+     #      @completed_member_activities = MemberActivity.where(user_id: current_user.id, completed: true).includes(:activity)
+     # end   
+        
      def completed
-          # Assuming you have a method to get the current user, like 'current_user'
-          @completed_member_activities = MemberActivity.where(user_id: current_user.id, completed: true).includes(:activity)
-     end   
+          my_user = User.find_by(email: session[':useremail'])
+          
+          if my_user
+            @completed_member_activities = my_user.member_activities.where(completed: true).includes(:activity)
         
+            if params[:search].present?
+              search_condition = @completed_member_activities.joins(:activity)
+                                                             .where("activities.name ILIKE ?", "%#{params[:search]}%")
+              @completed_member_activities = search_condition
+            end
         
+            logger.info("Filtered Completed Member Activities: #{@completed_member_activities}")
+          else
+            @completed_member_activities = []
+            logger.info('No user found, no completed activities to display.')
+          end
+        end
 end
