@@ -1,6 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe('Activity types management', type: :feature) do
+     before do
+          User.create!(first_name: 'John', last_name: 'Doe', email: 'john@example.com', role: 'platoon_leader')
+          OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+               provider: 'google_oauth2',
+               info: {
+                    email: 'john@example.com',
+                    first_name: 'John',
+                    last_name: 'Doe'
+               }
+          }
+          )
+          visit '/auth/google_oauth2'
+     end
      it 'Creating an activity type with valid inputs' do
           visit new_activity_type_path
           fill_in 'activity_type[name]', with: 'Running'

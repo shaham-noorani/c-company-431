@@ -2,7 +2,7 @@
 
 class PlatoonsController < ApplicationController
      before_action :set_platoon, only: %i[show edit update destroy]
-
+     before_action :check_if_not_pleb
      # GET /platoons or /platoons.json
      def index
           @platoons = Platoon.all
@@ -74,5 +74,10 @@ class PlatoonsController < ApplicationController
      # Only allow a list of trusted parameters through.
      def platoon_params
           params.require(:platoon).permit(:name, :leader_id)
+     end
+
+     def check_if_not_pleb
+          current_user = User.find_by(email: session[':useremail'])
+          redirect_to(root_path, alert: 'Not authorized') if current_user.nil? || !(current_user.check_admin || current_user.check_platoon_leader)
      end
 end

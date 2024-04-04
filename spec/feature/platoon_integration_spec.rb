@@ -3,12 +3,26 @@
 require 'rails_helper'
 
 RSpec.describe('Platoons management', type: :feature) do
-     let!(:leader) { User.create(first_name: 'John', last_name: 'Doe', email: 'john@example.com', role: 'member', class_year: 'fish', military_affiliation: 'Air Force', military_branch: 'USAF') }
+     #let!(:leader) { User.create(first_name: 'John', last_name: 'Doe', email: 'john@example.com', role: 'platoon_leader', class_year: 'fish', military_affiliation: 'Air Force', military_branch: 'USAF') }
+     before do
+          User.create!(first_name: 'John', last_name: 'Doe', email: 'john@example.com', role: 'platoon_leader')
+          OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+               provider: 'google_oauth2',
+               info: {
+                    email: 'john@example.com',
+                    first_name: 'John',
+                    last_name: 'Doe'
+               }
+          }
+          )
+          visit '/auth/google_oauth2'
+     end
      describe 'Creating a new platoon' do
           it 'creates a platoon with valid attributes' do
+               
                visit new_platoon_path
 
-               fill_in 'platoon[name]', with: 'Bravo Platoon'
+               fill_in 'Platoon Name:', with: 'Bravo Platoon'
                select "john@example.com", from: 'platoon[leader_id]'
 
                click_on 'Create Platoon'

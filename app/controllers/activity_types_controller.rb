@@ -2,7 +2,7 @@
 
 class ActivityTypesController < ApplicationController
      before_action :set_activity_type, only: %i[show edit update destroy]
-
+     before_action :check_if_not_pleb
      # GET /activity_types or /activity_types.json
      def index
           @activity_types = ActivityType.all
@@ -67,5 +67,10 @@ class ActivityTypesController < ApplicationController
      # Only allow a list of trusted parameters through.
      def activity_type_params
           params.require(:activity_type).permit(:name, :description)
+     end
+
+     def check_if_not_pleb
+          current_user = User.find_by(email: session[':useremail'])
+          redirect_to(root_path, alert: 'Not authorized') if current_user.nil? || !(current_user.check_admin || current_user.check_platoon_leader)
      end
 end

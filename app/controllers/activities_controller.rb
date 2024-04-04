@@ -2,7 +2,7 @@
 
 class ActivitiesController < ApplicationController
      before_action :set_activity, only: %i[show edit update destroy]
-
+     before_action :check_if_not_pleb
      # GET /activities or /activities.json
      def index
           @activities = Activity.all
@@ -195,5 +195,10 @@ class ActivitiesController < ApplicationController
 
      def activity_params
           params.require(:activity).permit(:name, :description, :activity_type_id)
+     end
+
+     def check_if_not_pleb
+          current_user = User.find_by(email: session[':useremail'])
+          redirect_to(root_path, alert: 'Not authorized') if current_user.nil? || !(current_user.check_admin || current_user.check_platoon_leader)
      end
 end
