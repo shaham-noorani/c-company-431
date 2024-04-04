@@ -22,7 +22,7 @@
     <% @member_activities.each do |member_activity| %>
       <tr>
         <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.activity.name %></td>
-        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.user.first_name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.user.first_name %> <%= member_activity.user.last_name %></td>
         <td style="border: 1px solid black; padding: 8px; text-align: left;">
             <%= member_activity.user.platoon.name if member_activity.user.platoon %>
         </td>
@@ -64,7 +64,7 @@
     <% @completed_member_activities.each do |member_activity| %>
       <tr>
         <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.activity.name %></td>
-        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.user.first_name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.user.first_name %> <%= member_activity.user.last_name %></td>
         <td style="border: 1px solid black; padding: 8px; text-align: left;">
             <%= member_activity.user.platoon.name if member_activity.user.platoon %>
         </td>
@@ -106,7 +106,7 @@
     <% @not_completed_member_activities.each do |member_activity| %>
       <tr>
         <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.activity.name %></td>
-        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.user.first_name %></td>
+        <td style="border: 1px solid black; padding: 8px; text-align: left;"><%= member_activity.user.first_name %> <%= member_activity.user.last_name %></td>
         <td style="border: 1px solid black; padding: 8px; text-align: left;">
             <%= member_activity.user.platoon.name if member_activity.user.platoon %>
         </td>
