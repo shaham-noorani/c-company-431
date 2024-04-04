@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe('User management', type: :feature) do
     before do
          User.create!(first_name: 'Test', last_name: 'User', email: 'user@example.com', role: 'admin')
