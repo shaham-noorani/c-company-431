@@ -50,7 +50,7 @@ Rails.application.routes.draw do
   get '/analytics/platoons/:platoon_id', to: 'analytics#platoon_analytics', as: 'platoon_analytics'
 
   get '/analytics/logs/:platoon_id', to: 'analytics#platoon_logs', as: 'platoon_logs'
-
+  get 'help' => 'helps#index'
 
   # Defines the root path route ("/")
   root "home#index"
