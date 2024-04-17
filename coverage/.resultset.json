@@ -1105,6 +1105,8 @@
       },
       "/csce431/c-company-431/app/controllers/helps_controller.rb": {
         "lines": [
+          null,
+          null,
           0,
           0
         ],
@@ -1112,6 +1114,6 @@
         }
       }
     },
-    "timestamp": 1713279655
+    "timestamp": 1713323875
   }
 }
