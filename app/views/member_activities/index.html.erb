@@ -8,7 +8,7 @@
   <%= form.submit "Search", class: 'btn btn-primary' %>
 <% end %>
 <h1>My Activities</h1>
-<%= link_to "Assign Yourslef an Activity", new_member_activity_path, class: 'btn btn-primary' %>
+<%= link_to "Assign Yourself an Activity", new_member_activity_path, class: 'btn btn-primary' %>
 <div id="member_activities">
   <% @member_activities.each do |member_activity| %>
     <div class="member_activity <%= 'completed' if member_activity.completed %>" style="<%= 'display: none;' if member_activity.completed %>">
