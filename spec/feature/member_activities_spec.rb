@@ -16,7 +16,7 @@ RSpec.describe('Member activities management', type: :feature) do
         it 'test' do
             visit '/auth/google_oauth2'
             visit member_activities_path
-            click_on "Assign Yourslef an Activity"
+            click_on "Assign Yourself an Activity"
             # select "Test User", from: "User"
             select "a workout", from: "Activity"
             # fill_in "Date", with: "11111111"
