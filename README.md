@@ -89,3 +89,18 @@ CI/CD has been implemented with github actions. You can see our workflow.yml for
 ## Support
 
 Please reach out to keeganasmith2003@gmail.com for help. 
+
+## Extra help
+
+You can look at the help page on the website at https://ccompany-4098253e3a14.herokuapp.com/
+
+## References
+
+https://www.youtube.com/watch?v=dQw4w9WgXcQ 
+
+heroku.com
+
+github.com
+
+guides.rubyonrails.org
+
