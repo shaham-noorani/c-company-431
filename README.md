@@ -103,4 +103,3 @@ heroku.com
 github.com
 
 guides.rubyonrails.org
-
