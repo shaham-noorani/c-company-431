@@ -8,12 +8,12 @@ C-Company Activity tracker is a tracker to help assist leaderhsip with assigning
 
 This code has been run and tested on:
 
-- Ruby - 3.0.2p107
-- Rails - 6.1.4.1
+- Ruby - 3.1.2p20
+- Rails - 7.0.8
 - Ruby Gems - Listed in `Gemfile`
-- PostgreSQL - 13.3
-- Nodejs - v16.9.1
-- Yarn - 1.22.11
+- PostgreSQL - 13.7
+- Nodejs - v16.15.0
+- Yarn - 1.22.18
 - Docker (Latest Container)
 
 
@@ -21,22 +21,38 @@ This code has been run and tested on:
 
 - Docker - Download latest version at https://www.docker.com/products/docker-desktop
 - Heroku CLI - Download latest version at https://devcenter.heroku.com/articles/heroku-cli
-- Git - Downloat latest version at https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
-- GitHub Desktop (Not needed, but HELPFUL) at https://desktop.github.com/
+- Git - Download latest version at https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
 ## Installation
 
 Download this code repository by using git:
 
-`git clone https://github.com/CSCE431-Software-Engineering/sprint-1-ccompany'
+`git clone https://github.com/shaham-noorani/c-company-431.git'
+
+Once cloned, cd into the repository and run:
+
+```
+bundle install
+rails db:create
+```
+
+You will also need to ask us for the .env file which stores our google oauth credentials. Once you have created the .env file with the variables CLIENT_ID and CLIENT_SECRET, you can run the application with:
+
+```
+rails server --binding=0.0.0.0
+```
+
 ## Tests
 
-An RSpec test suite is available and can be ran using:
+An RSpec test suite is available and can be run using:
 
-`rspec spec/`
+`rspec`
 
-You can run all the test cases by running. This will run both the unit and integration tests.
-`rspec .`
+This will run all test cases. If you want to run a specific suite you can run:
+
+```
+rspec spec/<suite_name>
+```
 
 ## Execute Code
 
@@ -73,3 +89,17 @@ CI/CD has been implemented with github actions. You can see our workflow.yml for
 ## Support
 
 Please reach out to keeganasmith2003@gmail.com for help. 
+
+## Extra help
+
+You can look at the help page on the website at https://ccompany-4098253e3a14.herokuapp.com/
+
+## References
+
+https://www.youtube.com/watch?v=dQw4w9WgXcQ 
+
+heroku.com
+
+github.com
+
+guides.rubyonrails.org
