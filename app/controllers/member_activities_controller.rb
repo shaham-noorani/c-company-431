@@ -85,14 +85,13 @@ class MemberActivitiesController < ApplicationController
      def create
           member_activity_params_with_user = member_activity_params.merge(user_id: current_user.id)
           @member_activity = MemberActivity.new(member_activity_params_with_user)
-
           respond_to do |format|
                if @member_activity.save
                     format.html { redirect_to(member_activity_url(@member_activity), notice: 'Member activity was successfully created.') }
                     format.json { render(:show, status: :created, location: @member_activity) }
-                    # else
-                    # format.html { render(:new, status: :unprocessable_entity) }
-                    # format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
+               else
+                    format.html { render(:new, status: :unprocessable_entity) }
+                    format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
                end
           end
      end
@@ -103,9 +102,9 @@ class MemberActivitiesController < ApplicationController
                if @member_activity.update(member_activity_params)
                     format.html { redirect_to(member_activity_url(@member_activity), notice: 'Member activity was successfully updated.') }
                     format.json { render(:show, status: :ok, location: @member_activity) }
-                    # else
-                    # format.html { render(:edit, status: :unprocessable_entity) }
-                    # format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
+               else
+                    format.html { render(:edit, status: :unprocessable_entity) }
+                    format.json { render(json: @member_activity.errors, status: :unprocessable_entity) }
                end
           end
      end

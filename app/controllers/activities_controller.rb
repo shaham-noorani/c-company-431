@@ -51,8 +51,8 @@ class ActivitiesController < ApplicationController
      # params generated in form(assign_member.html.erb) are passed to this function
      def another_function
           # printing params
-          logger.info('params hash below')
-          logger.info(params.inspect)
+          # logger.info('params hash below')
+          # logger.info(params.inspect)
 
           # get user id from params
           user_id = params[:user_id]
@@ -93,7 +93,7 @@ class ActivitiesController < ApplicationController
           # this else statement may not be needed
           else
                # Handle case where user_id or deadline are not present
-               flash[:error] = 'User ID and deadline are required'
+               flash[:error] = 'User ID and deadline are required. Activity was not assigned'
                redirect_to(@activity)
           end
      end
