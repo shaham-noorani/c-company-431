@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
   resources :sessions, only: [:new, :create, :destroy]
   get '/logout', to: 'sessions#destroy', as: 'logout'
-  
+  resources :helps, only: [:index]
   resources :member_events
   resources :activity_types
   resources :activities do
@@ -50,7 +50,6 @@ Rails.application.routes.draw do
   get '/analytics/platoons/:platoon_id', to: 'analytics#platoon_analytics', as: 'platoon_analytics'
 
   get '/analytics/logs/:platoon_id', to: 'analytics#platoon_logs', as: 'platoon_logs'
-  get 'help' => 'helps#index'
 
   # Defines the root path route ("/")
   root "home#index"

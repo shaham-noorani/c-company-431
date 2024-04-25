@@ -88,8 +88,9 @@ CI/CD has been implemented with github actions. You can see our workflow.yml for
 
 ## Support
 
-Please reach out to keeganasmith2003@gmail.com for help. 
+We have a support document here:
 
+https://docs.google.com/document/d/1SPtSgvS5s5EuBI3sFjTddylYHvMouWH7FYdX-AMtA0I/edit#heading=h.lwvof6wvy3kw
 ## Extra help
 
 You can look at the help page on the website at https://ccompany-4098253e3a14.herokuapp.com/
