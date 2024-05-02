@@ -135,7 +135,7 @@ class MemberActivitiesController < ApplicationController
      def mark_as_complete
           @member_activity = MemberActivity.find(params[:id])
 
-          if @member_activity.update(completed: true, end_time: params[:end_time])
+          if @member_activity.update(completed: true, end_time: params[:end_time], start_time: params[:start_time])
                flash[:notice] = 'Activity marked as completed successfully.'
                # else
                #   flash[:alert] = "There was an issue marking the activity as completed."
