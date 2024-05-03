@@ -24,8 +24,14 @@ This code has been run and tested on:
 - Git - Download latest version at https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
 ## Installation
+You will need to download docker and pull the docker image like so:
+```
+docker run --rm -it --volume "$(pwd):/rails_app" -e DATABASE_USER=test_app -e DATABASE_PASSWORD=test_password -p 3000:3000 paulinewade/csce431:latest
+```
+You can find the installation instructions for docker here: 
+https://docs.docker.com/desktop/ 
 
-Download this code repository by using git:
+Next download this code repository using git:
 
 `git clone https://github.com/shaham-noorani/c-company-431.git'
 
@@ -59,7 +65,7 @@ rspec spec/<suite_name>
 Run the following code in Powershell if using windows or the terminal using Linux/Mac
 
 
-`docker run --rm -it --volume "$(pwd):/rails_app" -e DATABASE_USER=test_app -e DATABASE_PASSWORD=test_password -p 3000:3000 dmartinez05/ruby_rails_postgresql:latest`
+`docker run --rm -it --volume "$(pwd):/rails_app" -e DATABASE_USER=test_app -e DATABASE_PASSWORD=test_password -p 3000:3000 paulinewade/csce431:latest`
 
 
 Install the app
@@ -88,15 +94,16 @@ CI/CD has been implemented with github actions. You can see our workflow.yml for
 
 ## Support
 
-Please reach out to keeganasmith2003@gmail.com for help. 
+We have a support document here:
 
+https://docs.google.com/document/d/1SPtSgvS5s5EuBI3sFjTddylYHvMouWH7FYdX-AMtA0I/edit#heading=h.lwvof6wvy3kw 
 ## Extra help
 
-You can look at the help page on the website at https://ccompany-4098253e3a14.herokuapp.com/
+You can look at the help page on the website at https://ccompany-4098253e3a14.herokuapp.com/helps
 
 ## References
 
-https://www.youtube.com/watch?v=dQw4w9WgXcQ 
+https://drive.google.com/file/d/1xSYK70NL_6ANkEfl7sG_UGi3Wl1-tO4F/view?usp=drive_link
 
 heroku.com
 
