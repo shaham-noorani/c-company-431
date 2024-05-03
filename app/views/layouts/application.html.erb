@@ -60,7 +60,8 @@
       <li class="nav-item">
         <%= link_to 'Completed Activities', completed_member_activities_path, class: 'nav-link' %>
       </li>
-        
+      </li>
+      
       <%  if(User.find_by(email: session[":useremail"])&.check_admin || User.find_by(email: session[":useremail"])&.check_platoon_leader)  %>
         <li class="nav-item">
           <%= link_to 'Manage Users', users_path, class: 'nav-link' %>
@@ -74,15 +75,15 @@
         <li class="nav-item">
           <%= link_to 'Platoons', platoons_path, class: 'nav-link' %>
         </li>
+        <li class="nav-item">
+          <%= link_to 'My Platoon', my_platoon_path, class: 'nav-link' %>
+        </li>
       <% end %>
       
       <%  if(User.find_by(email: session[":useremail"])&.check_admin) %>
         <li class="nav-item">
           <%= link_to 'Analytics', analytics_path, class: 'nav-link' %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'My Platoon', my_platoon_path, class: 'nav-link' %>
-        </li>
+        
       <% end %>
       <li class="nav-item">
         <%= link_to 'Help', helps_path, class: "nav-link" %>
